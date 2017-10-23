@@ -33,6 +33,8 @@ import * as userController from "./controllers/user";
 import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
 
+import * as createCompanyController from "./controllers/create-company";
+
 /**
  * API keys and Passport configuration.
  */
@@ -88,13 +90,13 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   // After successful login, redirect back to the intended page
   if (!req.user &&
-      req.path !== "/login" &&
-      req.path !== "/signup" &&
-      !req.path.match(/^\/auth/) &&
-      !req.path.match(/\./)) {
+    req.path !== "/login" &&
+    req.path !== "/signup" &&
+    !req.path.match(/^\/auth/) &&
+    !req.path.match(/\./)) {
     req.session.returnTo = req.path;
   } else if (req.user &&
-      req.path == "/account") {
+    req.path == "/account") {
     req.session.returnTo = req.path;
   }
   next();
@@ -121,6 +123,10 @@ app.post("/account/profile", passportConfig.isAuthenticated, userController.post
 app.post("/account/password", passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
+
+app.get("/company/create", createCompanyController.getCreateCompany);
+app.post("/company/create", createCompanyController.postCreateCompany);
+app.get("/company/confirm", createCompanyController.getConfirmCompany);
 
 /**
  * API examples routes.

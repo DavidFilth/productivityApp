@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  h1 Your Company has been created
+  p.lead You are now Logged In and now you can configure the application. Choose what to do next.
+  hr
+  .row
+    .col-sm-6
+      h2 Define roles for your company
+      p Create the roles you will assign to the users.
+      p
+        a.btn.btn-default(href='/roles/create', role='button') Create Roles »
+    .col-sm-6
+      h2 Create employees
+      p Register users in the application.
+      p
+        a.btn.btn-default(href='/employees/create', role='button') Create Employees »
+    .col-sm-6
+      h2 Configure preloaded data
+      p View and manage the preloaded data in the application
+      p
+        a.btn.btn-default(href='/company/config', role='button') Configure Data »
+    .col-sm-6
+      h2 Manage projects
+      p Create, view and manage the current projects in your company
+      p
+        a.btn.btn-default(href='/projects/main', role='button') Manage Projects »
