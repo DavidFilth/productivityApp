@@ -10,6 +10,16 @@ export type UserModel = mongoose.Document & {
 
   companyId: mongoose.Types.ObjectId,
   roleId: mongoose.Types.ObjectId,
+  doj: Date,
+  fte: Date,
+  conversations: Array<{}>,
+  notifications: Array<{}>,
+  projects: Array<{}>,
+  skills: Array<{}>,
+  teams: Array<{}>,
+  groups: Array<{}>,
+  contacts: Array<{}>,
+
 
   facebook: string,
   tokens: AuthToken[],
@@ -18,6 +28,7 @@ export type UserModel = mongoose.Document & {
     firstName: string,
     lastName: string,
     gender: string,
+    birthday: Date,
     location: string,
     portfolio: string,
     picture: string
@@ -41,6 +52,15 @@ const userSchema = new mongoose.Schema({
 
   companyId: mongoose.Schema.Types.ObjectId,
   roleId: mongoose.Schema.Types.ObjectId,
+  doj: Date,
+  fte: Date,
+  conversations: [{}],
+  notifications: [{}],
+  projects: [{}],
+  skills: [{}],
+  teams: [{}],
+  groups: [{}],
+  contacts: [{}],
 
   facebook: String,
   twitter: String,
