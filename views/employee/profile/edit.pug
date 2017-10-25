@@ -1,4 +1,4 @@
-extends ../layout
+extends ../../layout
 
 block content
   .page-header
@@ -27,9 +27,6 @@ block content
         label.radio.col-sm-3
           input(type='radio', checked=user.profile.gender=='female', name='gender', value='female', data-toggle='radio')
           span Female
-        label.radio.col-sm-3
-          input(type='radio', checked=user.profile.gender=='other', name='gender', value='other', data-toggle='radio')
-          span Other
     .form-group
       label.col-sm-3.control-label(for='location') Location
       .col-sm-7

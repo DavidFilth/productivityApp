@@ -1,8 +1,8 @@
 extends ../layout
 
 block content
-  h1 Congratulations #{userEmail}
-  p.lead Your Company #{companyName} has been created, now choose what to do next.
+  h1 Dashboard
+  p.lead Logged in as #{userEmail}.
   hr
   .row
     .col-sm-6
@@ -25,3 +25,8 @@ block content
       p Create, view and manage the current projects in your company
       p
         a.btn.btn-default(href='/projects/main', role='button') Manage Projects »
+    .col-sm-6
+      h2 Edit My Profile
+      p Add or modify my own profile information
+      p
+        a.btn.btn-default(href='/employee/profile/edit', role='button') Edit Profile »

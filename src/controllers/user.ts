@@ -3,9 +3,11 @@ import * as crypto from "crypto";
 import * as nodemailer from "nodemailer";
 import * as passport from "passport";
 import { default as User, UserModel, AuthToken } from "../models/User";
+import { default as Role, RoleModel } from "../models/Role";
+import { default as Company, CompanyModel } from "../models/Company";
 import { Request, Response, NextFunction } from "express";
 import { LocalStrategyInfo } from "passport-local";
-import { WriteError } from "mongodb";
+import { WriteError, ObjectId } from "mongodb";
 const request = require("express-validator");
 
 
@@ -47,6 +49,14 @@ export let postLogin = (req: Request, res: Response, next: NextFunction) => {
     req.logIn(user, (err) => {
       if (err) { return next(err); }
       req.flash("success", { msg: "Success! You are logged in." });
+
+      req.session.data = {
+        "userId": user._id,
+        "userEmail": user.email,
+        "roleId": user.roleId,
+        "companyId": user.companyId
+      };
+      res.setHeader("Set-Cookie", [`companyId=${user.companyId}`, `userId=${user._id}`, `userEmail=${user.email}`, `roleId=${user.roleId}`]);
       res.redirect(req.session.returnTo || "/");
     });
   })(req, res, next);
@@ -57,26 +67,40 @@ export let postLogin = (req: Request, res: Response, next: NextFunction) => {
  * Log out.
  */
 export let logout = (req: Request, res: Response) => {
+  const cookie = req.cookies;
+  for (const prop in cookie) {
+    if (!cookie.hasOwnProperty(prop)) {
+      continue;
+    }
+    res.cookie(prop, "", { expires: new Date(0) });
+  }
   req.logout();
   res.redirect("/");
 };
 
 /**
- * GET /signup
- * Signup page.
+ * GET /employee/create
+ * Create employee form page.
  */
 export let getSignup = (req: Request, res: Response) => {
-  if (req.user) {
-    return res.redirect("/");
-  }
-  res.render("account/signup", {
-    title: "Create Account"
+  let currentCompany: CompanyModel;
+  Company.findById(new ObjectId(req.cookies.companyId), (err, company) => {
+    if (err) return err;
+    currentCompany = company as CompanyModel;
+    Role.find({ "companyId": new ObjectId(req.cookies.companyId) }, (err, roles) => {
+      if (err) return err;
+      res.render("employee/create", {
+        title: "Create Employee",
+        availableRoles: roles,
+        userCompany: currentCompany.alias
+      });
+    });
   });
 };
 
 /**
- * POST /signup
- * Create a new local account.
+ * POST /employee/create
+ * Create a new employee in the system.
  */
 export let postSignup = (req: Request, res: Response, next: NextFunction) => {
   req.assert("email", "Email is not valid").isEmail();
@@ -88,28 +112,29 @@ export let postSignup = (req: Request, res: Response, next: NextFunction) => {
 
   if (errors) {
     req.flash("errors", errors);
-    return res.redirect("/signup");
+    return res.redirect("/employee/create");
   }
 
   const user = new User({
     email: req.body.email,
-    password: req.body.password
-  });
+    password: req.body.password,
+    roleId: req.body.role,
+    companyId: req.session.data.companyId,
+    profile: {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+    }
+  }) as UserModel;
 
   User.findOne({ email: req.body.email }, (err, existingUser) => {
     if (err) { return next(err); }
     if (existingUser) {
-      req.flash("errors", { msg: "Account with that email address already exists." });
-      return res.redirect("/signup");
+      req.flash("errors", { msg: "Employee with that email address already exists." });
+      return res.redirect("/employee/create");
     }
     user.save((err) => {
       if (err) { return next(err); }
-      req.logIn(user, (err) => {
-        if (err) {
-          return next(err);
-        }
-        res.redirect("/");
-      });
+      res.redirect("/dashboard");
     });
   });
 };
@@ -119,7 +144,7 @@ export let postSignup = (req: Request, res: Response, next: NextFunction) => {
  * Profile page.
  */
 export let getAccount = (req: Request, res: Response) => {
-  res.render("account/profile", {
+  res.render("employee/profile/edit", {
     title: "Account Management"
   });
 };
@@ -136,26 +161,27 @@ export let postUpdateProfile = (req: Request, res: Response, next: NextFunction)
 
   if (errors) {
     req.flash("errors", errors);
-    return res.redirect("/account");
+    return res.redirect("/employee/profile/edit");
   }
 
   User.findById(req.user.id, (err, user: UserModel) => {
     if (err) { return next(err); }
     user.email = req.body.email || "";
-    user.profile.name = req.body.name || "";
+    user.profile.firstName = req.body.firstName || "";
+    user.profile.lastName = req.body.lastName || "";
     user.profile.gender = req.body.gender || "";
     user.profile.location = req.body.location || "";
-    user.profile.website = req.body.website || "";
+    user.profile.portfolio = req.body.portfolio || "";
     user.save((err: WriteError) => {
       if (err) {
         if (err.code === 11000) {
           req.flash("errors", { msg: "The email address you have entered is already associated with an account." });
-          return res.redirect("/account");
+          return res.redirect("/employee/profile/edit");
         }
         return next(err);
       }
       req.flash("success", { msg: "Profile information has been updated." });
-      res.redirect("/account");
+      res.redirect("/employee/profile/edit");
     });
   });
 };
@@ -172,7 +198,7 @@ export let postUpdatePassword = (req: Request, res: Response, next: NextFunction
 
   if (errors) {
     req.flash("errors", errors);
-    return res.redirect("/account");
+    return res.redirect("/employee/profile/edit");
   }
 
   User.findById(req.user.id, (err, user: UserModel) => {
@@ -181,7 +207,7 @@ export let postUpdatePassword = (req: Request, res: Response, next: NextFunction
     user.save((err: WriteError) => {
       if (err) { return next(err); }
       req.flash("success", { msg: "Password has been changed." });
-      res.redirect("/account");
+      res.redirect("/employee/profile/edit");
     });
   });
 };

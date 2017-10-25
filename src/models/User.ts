@@ -5,18 +5,21 @@ import * as mongoose from "mongoose";
 export type UserModel = mongoose.Document & {
   email: string,
   password: string,
-  roleId: mongoose.Types.ObjectId,
   passwordResetToken: string,
   passwordResetExpires: Date,
+
+  companyId: mongoose.Types.ObjectId,
+  roleId: mongoose.Types.ObjectId,
 
   facebook: string,
   tokens: AuthToken[],
 
   profile: {
-    name: string,
+    firstName: string,
+    lastName: string,
     gender: string,
     location: string,
-    website: string,
+    portfolio: string,
     picture: string
   },
 
@@ -35,6 +38,8 @@ const userSchema = new mongoose.Schema({
   passwordResetToken: String,
   passwordResetExpires: Date,
 
+
+  companyId: mongoose.Schema.Types.ObjectId,
   roleId: mongoose.Schema.Types.ObjectId,
 
   facebook: String,
@@ -43,10 +48,11 @@ const userSchema = new mongoose.Schema({
   tokens: Array,
 
   profile: {
-    name: String,
+    firstName: String,
+    lastName: String,
     gender: String,
     location: String,
-    website: String,
+    portfolio: String,
     picture: String
   }
 }, { timestamps: true });
@@ -67,8 +73,8 @@ userSchema.pre("save", function save(next) {
   });
 });
 
-userSchema.methods.comparePassword = function(candidatePassword: string, cb: (err: any, isMatch: any) => {}) {
-  bcrypt.compare(candidatePassword, this.password, (err: mongoose.Error , isMatch: boolean) => {
+userSchema.methods.comparePassword = function (candidatePassword: string, cb: (err: any, isMatch: any) => {}) {
+  bcrypt.compare(candidatePassword, this.password, (err: mongoose.Error, isMatch: boolean) => {
     cb(err, isMatch);
   });
 };
@@ -77,7 +83,7 @@ userSchema.methods.comparePassword = function(candidatePassword: string, cb: (er
 /**
  * Helper method for getting user's gravatar.
  */
-userSchema.methods.gravatar = function(size: number) {
+userSchema.methods.gravatar = function (size: number) {
   if (!size) {
     size = 200;
   }

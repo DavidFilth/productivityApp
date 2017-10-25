@@ -5,6 +5,7 @@ import * as express from "express";
 import * as compression from "compression";  // compresses requests
 import * as session from "express-session";
 import * as bodyParser from "body-parser";
+import * as cookieParser from "cookie-parser";
 import * as logger from "morgan";
 import * as errorHandler from "errorhandler";
 import * as lusca from "lusca";
@@ -34,6 +35,7 @@ import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
 
 import * as createCompanyController from "./controllers/create-company";
+import * as dashboardController from "./controllers/dashboard";
 
 /**
  * API keys and Passport configuration.
@@ -68,6 +70,7 @@ app.use(compression());
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(expressValidator());
 app.use(session({
   resave: true,
@@ -94,7 +97,8 @@ app.use((req, res, next) => {
     req.path !== "/signup" &&
     !req.path.match(/^\/auth/) &&
     !req.path.match(/\./)) {
-    req.session.returnTo = req.path;
+    // req.session.returnTo = req.path;
+    req.session.returnTo = "/dashboard";
   } else if (req.user &&
     req.path == "/account") {
     req.session.returnTo = req.path;
@@ -124,9 +128,17 @@ app.post("/account/password", passportConfig.isAuthenticated, userController.pos
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
 
+app.get("/dashboard", dashboardController.getDashboard);
+
 app.get("/company/create", createCompanyController.getCreateCompany);
 app.post("/company/create", createCompanyController.postCreateCompany);
 app.get("/company/confirm", createCompanyController.getConfirmCompany);
+
+app.get("/employee/create", userController.getSignup);
+app.post("/employee/create", userController.postSignup);
+
+app.get("/employee/profile/edit", passportConfig.isAuthenticated, userController.getAccount);
+app.post("/employee/profile/edit", passportConfig.isAuthenticated, userController.postUpdateProfile);
 
 /**
  * API examples routes.
