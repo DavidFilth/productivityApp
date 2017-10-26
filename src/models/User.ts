@@ -2,6 +2,11 @@ import * as bcrypt from "bcrypt-nodejs";
 import * as crypto from "crypto";
 import * as mongoose from "mongoose";
 
+import { NotificationModel } from "./Notification";
+import { ConversationModel } from "./Conversation";
+import { ProjectModel } from "./Project";
+import { SkillModel } from "./Skill";
+
 export type UserModel = mongoose.Document & {
   email: string,
   password: string,
@@ -12,10 +17,10 @@ export type UserModel = mongoose.Document & {
   roleId: mongoose.Types.ObjectId,
   doj: Date,
   fte: Date,
-  conversations: Array<{}>,
-  notifications: Array<{}>,
-  projects: Array<{}>,
-  skills: Array<{}>,
+  conversations: Array<ConversationModel>,
+  notifications: Array<NotificationModel>,
+  projects: Array<ProjectModel>,
+  skills: [SkillModel, number],
   teams: Array<{}>,
   groups: Array<{}>,
   contacts: Array<{}>,
@@ -54,13 +59,13 @@ const userSchema = new mongoose.Schema({
   roleId: mongoose.Schema.Types.ObjectId,
   doj: Date,
   fte: Date,
-  conversations: [{}],
-  notifications: [{}],
-  projects: [{}],
-  skills: [{}],
-  teams: [{}],
-  groups: [{}],
-  contacts: [{}],
+  conversations: [],
+  notifications: [],
+  projects: [],
+  skills: [],
+  teams: [],
+  groups: [],
+  contacts: [],
 
   facebook: String,
   twitter: String,
