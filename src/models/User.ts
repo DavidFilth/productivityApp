@@ -6,6 +6,8 @@ import { NotificationModel } from "./Notification";
 import { ConversationModel } from "./Conversation";
 import { ProjectModel } from "./Project";
 import { SkillModel } from "./Skill";
+import { TeamModel } from "./Team";
+import { GroupModel } from "./Group";
 
 export type UserModel = mongoose.Document & {
   email: string,
@@ -21,9 +23,9 @@ export type UserModel = mongoose.Document & {
   notifications: Array<NotificationModel>,
   projects: Array<ProjectModel>,
   skills: [SkillModel, number],
-  teams: Array<{}>,
-  groups: Array<{}>,
-  contacts: Array<{}>,
+  teams: Array<TeamModel>,
+  groups: Array<GroupModel>,
+  contacts: Array<mongoose.Types.ObjectId>,
 
 
   facebook: string,
