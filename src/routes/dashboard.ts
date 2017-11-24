@@ -22,11 +22,11 @@ class DashboardRouter {
                 },
                 notifications: [{}, {}],
                 teams: [
-                    {members: [{},{},{}]},
-                    {members: [{},{},{}]}
+                    {members: [{}, {}, {}]},
+                    {members: [{}, {}, {}]}
                 ]
             },
-            activities:[
+            activities: [
                 {
                     content: "Suspendisse ante lectus, vestibulum malesuada urna et, aliquam fermentum tortor. Morbi pretium non arcu sit amet ultrices. Suspendisse laoreet odio velit, eu consectetur arcu vestibulum nec. Proin mollis tincidunt dolor et lobortis. Nunc semper purus non risus lobortis vulputate. Vestibulum lorem sapien, sodales ut consequat id, tristique nec quam. Pellentesque tincidunt neque tellus, vitae consequat magna mattis quis.",
                     project: { name: "HR Project"},
