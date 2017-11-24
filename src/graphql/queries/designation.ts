@@ -3,7 +3,7 @@ import designationModel from "../../models/Designation";
 import { designationType } from "../types/designation";
 
 export default {
-    Company: {
+    Designation: {
         type: designationType,
         args: {
             id: {
