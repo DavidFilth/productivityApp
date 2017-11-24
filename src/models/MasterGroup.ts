@@ -1,16 +1,17 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type MasterGroupModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
+export type MasterGroupModel = Document & {
+    company: Types.ObjectId;
     name: string;
-    members: Array<mongoose.Types.ObjectId>;
+    members: Types.ObjectId[];
 };
 
-const MasterGroupSchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
+const MasterGroupSchema = new Schema({
+    company: Schema.Types.ObjectId,
     name: String,
-    members: []
+    members: [
+        {type: Schema.Types.ObjectId, ref: "User"}
+    ]
 });
 
-const MasterGroup = mongoose.model("MasterGroup", MasterGroupSchema);
-export default MasterGroup;
+export default model("MasterGroup", MasterGroupSchema);

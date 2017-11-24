@@ -1,14 +1,13 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type EmpTypeModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
+export type EmpTypeModel = Document & {
+    company: Types.ObjectId;
     name: string;
 };
 
-const EmpTypeSchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
+const EmpTypeSchema = new Schema({
+    company: {type: Schema.Types.ObjectId, ref: "Company"},
     name: String
 });
 
-const EmpType = mongoose.model("EmpType", EmpTypeSchema);
-export default EmpType;
+export default model("EmpType", EmpTypeSchema);

@@ -1,38 +1,51 @@
-.navbar.navbar-default.navbar-fixed-top
+.navbar-more-overlay
+nav.navbar.navbar-inverse.navbar-fixed-top.animate
+  .container.navbar-more.visible-xs
+    form.navbar-form.navbar-left(role="search")
+      .form-group
+        .input-group
+          input.form-control(type="text" placeholder="Search for...")
+          span.input-group-btn
+            button.btn.btn-default(type="submit") Go
+    ul.nav.navbar-nav
+      li
+        a(href="#")
+          span.menu-icon.fa.fa-user-circle
+          | Profile
+      li
+        a(href="#")
+          span.menu-icon.fa.fa-building-o
+          | My Company
   .container
-    .navbar-header
-      button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      a.navbar-brand(href='/')
-        i.fa.fa-cube
-        | Project name
-    .collapse.navbar-collapse
-      ul.nav.navbar-nav
-        if !user
-          li(class=(title == 'Home') ? 'active' : undefined)
-            a(href='/') Home
-        else
-          li(class=(title == 'Dashboard') ? 'active' : undefined)
-            a(href='/dashboard') Dashboard
-      ul.nav.navbar-nav.navbar-right
-        if !user
-          li(class=(title == 'Login') ? 'active' : undefined)
-            a(href='/login') Login
-        else
-          li.dropdown(class=(title == 'Account Management') ? 'active' : undefined)
-            a.dropdown-toggle(href='#', data-toggle='dropdown')
-              if user.profile.picture
-                img(src=user.profile.picture)
-              else
-                img(src=user.gravatar(60))
-              span= user.profile.name || user.email || user.id
-              i.caret
-            ul.dropdown-menu
-              li
-                a(href='/employee/profile/edit') My Profile
-              li.divider
-              li
-                a(href='/logout') Logout
+    .navbar-header.hidden-xs
+      a.navbar-brand(href="#") Productivity App
+    ul.nav.navbar-nav.navbar-right.mobile-bar
+      li
+        a(href="#")
+          span.menu-icon.fa.fa-home
+          | Home
+      li
+        a(href="#")
+          span.menu-icon.fa.fa-share-alt-square
+          span.visible-xs Network
+          span.hidden-xs My Network
+      li.hidden-xs
+        a(href="#")
+          span.menu-icon.fa.fa-suitcase
+          | Projects
+      li
+        a(href="#")
+          span.menu-icon.fa.fa-users
+          | Teams
+      li.hidden-xs
+        a(href="#")
+          span.menu-icon.fa.fa-user-circle
+          | Employee
+      li
+        a(href="#")
+          span.menu-icon.fa.fa-comments
+          | Messenger
+      li
+        a(href="#navbar-more-show")
+          span.menu-icon.fa.fa-bars
+          | More

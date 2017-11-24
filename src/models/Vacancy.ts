@@ -1,38 +1,39 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type VacanyModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
+export type VacanyModel = Document & {
+    company: Types.ObjectId;
     name: string;
     location: string;
-    jobTitle: string;
+    jobTitle: Types.ObjectId;
     telecommuting: boolean;
-    empType: string;
-    seniorLvl: string;
+    empType: Types.ObjectId;
+    seniorLvl: Types.ObjectId;
     categories: Array<string>;
     description: string;
     responsibilities: string;
     qualifications: string;
     optQualifications: string;
     otherDetails: string;
-    applicants: Array<mongoose.Types.ObjectId>;
+    applicants: Types.ObjectId[];
 };
 
-const VacancySchema = new mongoose.Schema({
-    companyId: mongoose.Types.ObjectId,
+const VacancySchema = new Schema({
+    company: {type: Schema.Types.ObjectId, ref: "Company"},
     name: String,
     location: String,
-    jobTitle: String,
+    jobTitle: {type: Schema.Types.ObjectId, ref: "JobTitle"},
     telecommuting: Boolean,
-    empType: String,
-    seniorLvl: String,
+    empType: {type: Schema.Types.ObjectId, ref: "EmpType"},
+    seniorLvl: {type: Schema.Types.ObjectId, ref: "SeniorityLvl"},
     categories: [],
     description: String,
     responsibilities: String,
     qualifications: String,
     optQualifications: String,
     otherDetails: String,
-    applicants: []
+    applicants: [
+        {type: Schema.Types.ObjectId, ref: "User"}
+    ]
 }, { timestamps: true });
 
-const Vacancy = mongoose.model("Vacancy", VacancySchema);
-export default Vacancy;
+export default model("Vacancy", VacancySchema);

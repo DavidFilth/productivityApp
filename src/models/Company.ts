@@ -1,16 +1,15 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type CompanyModel = mongoose.Document & {
+export type CompanyModel = Document & {
     name: string;
     alias: string;
-    mastergroupId: mongoose.Types.ObjectId
+    mastergroup: Types.ObjectId
 };
 
-const companySchema = new mongoose.Schema({
+const companySchema = new Schema({
     name: { type: String, unique: true, required: true },
     alias: String,
-    mastergroupId: mongoose.Schema.Types.ObjectId
+    mastergroup: {type: Schema.Types.ObjectId, ref: "MasterGroup"}
 }, { timestamps: true });
 
-const Company = mongoose.model("Company", companySchema);
-export default Company;
+export default model("Company", companySchema);

@@ -1,14 +1,13 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type SeniorityLvlModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
+export type SeniorityLvlModel = Document & {
+    company: Types.ObjectId;
     name: string;
 };
 
-const SeniorityLvlSchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
+const SeniorityLvlSchema = new Schema({
+    company: {type: Schema.Types.ObjectId, ref: "Company"},
     name: String
 });
 
-const SeniorityLvl = mongoose.model("SeniorityLvl", SeniorityLvlSchema);
-export default SeniorityLvl;
+export default model("SeniorityLvl", SeniorityLvlSchema);

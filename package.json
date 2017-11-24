@@ -38,6 +38,8 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "apollo-link": "^1.0.3",
+    "apollo-server-express": "^1.2.0",
     "async": "^2.1.2",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.15.2",
@@ -51,6 +53,8 @@
     "express-session": "^1.14.2",
     "express-validator": "^3.1.3",
     "fbgraph": "^1.3.0",
+    "graphql": "^0.11.7",
+    "graphql-tools": "^2.8.0",
     "lodash": "^4.17.4",
     "lusca": "^1.4.1",
     "mongoose": "^4.6.6",

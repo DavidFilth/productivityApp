@@ -1,14 +1,13 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type SkillModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
+export type SkillModel = Document & {
+    company: Types.ObjectId;
     name: string;
 };
 
-const SkillSchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
+const SkillSchema = new Schema({
+    company: {type: Schema.Types.ObjectId, ref: "Company"},
     name: String
 });
 
-const Skill = mongoose.model("Skill", SkillSchema);
-export default Skill;
+export default model("Skill", SkillSchema);

@@ -1,18 +1,17 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-import { UserModel } from "./User";
-
-export type GroupModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
+export type GroupModel = Document & {
+    company: Types.ObjectId;
     name: string;
-    members: Array<UserModel>;
+    members: Types.ObjectId[];
 };
 
-const GroupSchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
+const GroupSchema = new Schema({
+    company: {type: Schema.Types.ObjectId, ref: "Company"},
     name: String,
-    members: []
+    members: [
+        {type: Schema.Types.ObjectId, ref: "User"}
+    ]
 });
 
-const Group = mongoose.model("Group", GroupSchema);
-export default Group;
+export default model("Group", GroupSchema);

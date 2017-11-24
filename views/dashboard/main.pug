@@ -1,32 +1,155 @@
 extends ../layout
 
 block content
-  h1 Dashboard
-  p.lead Logged in as #{userEmail}.
-  hr
-  .row
-    .col-sm-6
-      h2 Define roles for your company
-      p Create the roles you will assign to the users.
-      p
-        a.btn.btn-default(href='/roles/create', role='button') Create Roles »
-    .col-sm-6
-      h2 Create employees
-      p Register users in the application.
-      p
-        a.btn.btn-default(href='/employee/create', role='button') Create Employees »
-    .col-sm-6
-      h2 Configure preloaded data
-      p View and manage the preloaded data in the application
-      p
-        a.btn.btn-default(href='/company/config', role='button') Configure Data »
-    .col-sm-6
-      h2 Manage projects
-      p Create, view and manage the current projects in your company
-      p
-        a.btn.btn-default(href='/projects/main', role='button') Manage Projects »
-    .col-sm-6
-      h2 Edit My Profile
-      p Add or modify my own profile information
-      p
-        a.btn.btn-default(href='/employee/profile/edit', role='button') Edit Profile »
+  div(id="page-contents")
+    .container
+      .row
+        .col-md-3.static
+          .card.panel.panel-default.ks-solid.ks-widget.ks-widget-info
+            .ks-user1
+              p &nbsp;
+            .ks-user
+              img.ks-avatar1(src="http://via.placeholder.com/80x77" width="100" height="100")
+              .ks-info
+                .ks-name= user.profile.firstName + user.profile.lastName
+                .ks-description= user.company.name
+            .card-block1
+              .ks-item
+                span.fig= user.notifications.length
+                span.title Notifications
+          div
+            p &nbsp;
+          .card.panel.panel-default.ks-solid.ks-widget.ks-widget-users
+            .row
+              each team, index in user.teams
+                .col-xs-6
+                  h5.card-header1 Team #{index}
+                  .card-block
+                    .ks-user
+                      img.ks-avatar(src="http://via.placeholder.com/110x110" width="45" height="45")
+                    .ks-user
+                      img.ks-avatar(src="http://via.placeholder.com/110x110" width="45" height="45")
+                    .ks-user
+                      img.ks-avataract(src="http://via.placeholder.com/110x110" width="55" height="55")
+              .col-xs-6
+                h5.card-header1 Team 2
+                .card-block
+                  .ks-user
+                    img.ks-avatar(src="http://via.placeholder.com/110x110" width="45" height="45")
+                  .ks-user
+                    img.ks-avatar(src="http://via.placeholder.com/110x110" width="45" height="45")
+                  .ks-user
+                    img.ks-avataract(src="http://via.placeholder.com/110x110" width="55" height="55")
+          .ks-calendar
+            .ks-calendar-body
+              .ks-calendar-container
+                .ks-calendar-container-wrap
+                  div(id="ks-calendar")
+                .ks-calendar-container-info(data-auto-height=true)
+                  .ks-datepicker
+                    .flatpickr(data-inline=true)
+        .col-md-6
+          h4 Activity
+          .ks-social-profile
+            .ks-social-profile-body
+              .ks-feed
+                .card.panel.panel-default.ks-post
+                  .ks-header
+                    a.ks-user(href="#")
+                      img.ks-avatar(src="http://via.placeholder.com/110x110" width="36" height="36")
+                      span.ks-name Lisa Morris
+                    span.ks-date-created September 29, 2016
+                  .ks-body
+                    .ks-text
+                      | Express Wi-Fi empowers entrepreneurs to build a business by providing their community with access to the internet. Facebook designed the technology, and local internet providers add the connectivity. Express Wi-Fi is part of our Internet.org initiative.
+                  .ks-footer
+                    .ks-block
+                      span.ks-control(data-toggle="tooltip" data-placement="top" title="Comment")
+                        span.fa.fa-comment-o.ks-icon
+                        span.ks-amount 12
+                    .ks-block
+                      span.ks-control(data-toggle="tooltip" data-placement="top" title="Share")
+                        span.fa.fa-share.ks-icon
+                        span.ks-amount 1
+                      span.ks-control(data-toggle="tooltip" data-placement="top" title="Like")
+                        span.fa.fa-tags.ks-icon
+                        span.ks-amount 3
+          .ks-social-profile
+            .ks-social-profile-body
+              .ks-feed
+                .card.panel.panel-default.ks-post
+                  .ks-header
+                    a.ks-user(href="#")
+                      img.ks-avatar(src="http://via.placeholder.com/110x110" width="36" height="36")
+                      span.ks-name Sibatel Communications Inc.
+                    span.ks-date-created September 29, 2016
+                  .ks-body
+                    .ks-text
+                      | Express Wi-Fi empowers entrepreneurs to build a business by providing their community with access to the internet. Facebook designed the technology, and local internet providers add the connectivity. Express Wi-Fi is part of our Internet.org initiative.
+                  .ks-footer
+                    .ks-block
+                      span.ks-control(data-toggle="tooltip" data-placement="top" title="Comment")
+                        span.fa.fa-comment-o.ks-icon
+                        span.ks-amount 12
+                    .ks-block
+                      span.ks-control(data-toggle="tooltip" data-placement="top" title="Share")
+                        span.fa.fa-share.ks-icon
+                        span.ks-amount 1
+                      span.ks-control(data-toggle="tooltip" data-placement="top" title="Like")
+                        span.fa.fa-tags.ks-icon
+                        span.ks-amount 3              
+          h4 Articles
+          .post-content
+            .post-container
+              img.profile-photo-md.pull-left(src="http://placehold.it/300x300" alt="user")
+              .post-detail
+                .user-info
+                  h5
+                    a.profile-link(href="timeline.html") Article 1
+                  p.text-muted by ABC   
+                .line-divider
+                .post-text
+                  p Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+          .post-content
+            .post-container
+              img.profile-photo-md.pull-left(src="http://placehold.it/300x300" alt="user")
+              .post-detail
+                .user-info
+                  h5
+                    a.profile-link(href="timeline.html") Article 2
+                  p.text-muted by ABC
+                .line-divider
+                .post-text
+                    p Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+        .col-md-3.static
+          h4 Open Positions
+          .siderightbar(id="sticky-sidebar")
+            .form-group
+              i.icon.ion-android-search
+              input.form-control(type="text" placeholder="Search")
+            .suggestions
+              .follow-user
+                img.profile-photo-sm.pull-left(src="http://via.placeholder.com/128x128" alt="some")
+                div
+                  h5
+                    a(href="timeline.html") User 1
+              .follow-user
+                img.profile-photo-sm.pull-left(src="http://via.placeholder.com/128x128" alt="some")
+                div
+                  h5
+                    a(href="timeline.html") User 2
+              .follow-user
+                img.profile-photo-sm.pull-left(src="http://via.placeholder.com/128x128" alt="some")
+                div
+                  h5
+                    a(href="timeline.html") User 3
+              .follow-user
+                img.profile-photo-sm.pull-left(src="http://via.placeholder.com/128x128" alt="some")
+                div
+                  h5
+                    a(href="timeline.html") User 4
+              .follow-user
+                img.profile-photo-sm.pull-left(src="http://via.placeholder.com/128x128" alt="some")
+                div
+                  h5
+                    a(href="timeline.html") User 5

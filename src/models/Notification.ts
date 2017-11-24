@@ -1,15 +1,22 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type NotificationModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
+export type NotificationModel = Document & {
+    company: Types.ObjectId;
     content: string;
     sender: string;
-    users: Array<mongoose.Types.ObjectId>;
-    notifType: mongoose.Types.ObjectId;
-    createdAt: Date;
-    updatedAt: Date;
+    users: Types.ObjectId[];
+    notifType: string;
 };
-export type NotifTypesModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
-    value: string;
-};
+const NotificationSchema = new Schema(
+    {
+        company: {type: Schema.Types.ObjectId, ref: "Company"},
+        content: String,
+        sender: String,
+        users: [{type: Schema.Types.ObjectId, ref: "User"}],
+        notifType: String,
+    }, 
+    { timestamps: true}
+);
+
+export default model("Notification", NotificationSchema);
+ 

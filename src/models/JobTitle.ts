@@ -1,14 +1,13 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type JobTitleModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
+export type JobTitleModel = Document & {
+    company: Types.ObjectId;
     name: string;
 };
 
-const JobTitleSchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
+const JobTitleSchema = new Schema({
+    company: {type: Schema.Types.ObjectId, ref: "Company"},
     name: String
 });
 
-const JobTitle = mongoose.model("JobTitle", JobTitleSchema);
-export default JobTitle;
+export default model("JobTitle", JobTitleSchema);

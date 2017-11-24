@@ -1,29 +1,28 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-import { UserModel } from "./User";
-import { SkillModel } from "./Skill";
-
-export type ProjectModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
+export type ProjectModel = Document & {
+    company: Types.ObjectId;
     name: string;
-    skillsRequired: [SkillModel, number];
-    assets: Array<UserModel>;
-    teamId: mongoose.Types.ObjectId;
+    skillsRequired: Array<{
+        skill: Types.ObjectId;
+        grade: number;
+    }>;
+    team: Types.ObjectId;
+    assets: Types.ObjectId[];
     status: string;
     startDate: Date;
     finishDate: Date;
 };
 
-const ProjectSchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
+const ProjectSchema = new Schema({
+    company: {type: Schema.Types.ObjectId, ref: "Company" },
     name: String,
-    skillsRequired: [],
-    assets: [],
-    teamId: mongoose.Schema.Types.ObjectId,
+    skillsRequired: [{type: Schema.Types.ObjectId, ref: "Skill"}],
+    teams: [{ type: Schema.Types.ObjectId, ref: "Team"}],
+    assets: [{type: Schema.Types.ObjectId, ref: "User" }],
     status: String,
     startDate: Date,
     finishDate: Date
 });
 
-const Project = mongoose.model("Project", ProjectSchema);
-export default Project;
+export default model("Project", ProjectSchema);

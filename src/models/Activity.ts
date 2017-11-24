@@ -1,22 +1,21 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type ActivityModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId;
-    projectId: mongoose.Types.ObjectId;
+export type ActivityModel = Document & {
+    company: Types.ObjectId;
+    project: Types.ObjectId;
     content: string;
     progress: number;
-    users: Array<mongoose.Types.ObjectId>;
+    users: Types.ObjectId[];
     dueAt: Date;
 };
 
-const ActivitySchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
-    projectId: mongoose.Schema.Types.ObjectId,
+const ActivitySchema = new Schema({
+    company: {type: Schema.Types.ObjectId, ref: "Company"},
+    project: {type: Schema.Types.ObjectId , ref: "Project"},
     content: String,
     progress: Number,
-    users: [],
+    users: [ {type: Schema.Types.ObjectId, ref: "User"} ],
     dueAt: Date,
 }, { timestamps: true });
 
-const Activity = mongoose.model("Activity", ActivitySchema);
-export default Activity;
+export default model("Activity", ActivitySchema);

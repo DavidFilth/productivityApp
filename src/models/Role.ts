@@ -1,16 +1,17 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type RoleModel = mongoose.Document & {
+export type RoleModel = Document & {
     name: string;
     alias: string;
-    permissions: Array<mongoose.Types.ObjectId>;
+    permissions: string;
+    company: Types.ObjectId
 };
 
-const roleSchema = new mongoose.Schema({
+const roleSchema = new Schema({
     name: { type: String, required: true },
     alias: String,
-    permissions: [mongoose.Schema.Types.ObjectId]
+    permissions: String,
+    company: {type: Schema.Types.ObjectId, ref: "company"}
 }, { timestamps: true });
 
-const Role = mongoose.model("Role", roleSchema);
-export default Role;
+export default model("Role", roleSchema);

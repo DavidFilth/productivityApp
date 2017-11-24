@@ -1,20 +1,19 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type MessageModel = mongoose.Document & {
-    userId: mongoose.Types.ObjectId;
-    conversationId: mongoose.Types.ObjectId;
+export type MessageModel = Document & {
+    user: Types.ObjectId;
+    conversation: Types.ObjectId;
     msgContent: string;
     msgType: string;
     createdAt: Date;
 };
 
-const MessageSchema = new mongoose.Schema({
-    userId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
-    conversationId: mongoose.Schema.Types.ObjectId,
+const MessageSchema = new Schema({
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    conversation: {type: Schema.Types.ObjectId, ref: "Conversation"},
     msgContent: String,
     msgType: String,
     createdAt: Date
 });
 
-const Message = mongoose.model("Message", MessageSchema);
-export default Message;
+export default model("Message", MessageSchema);

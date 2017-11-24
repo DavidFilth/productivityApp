@@ -1,20 +1,20 @@
-import * as mongoose from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-export type ConversationModel = mongoose.Document & {
-    companyId: mongoose.Types.ObjectId,
-    owner: mongoose.Types.ObjectId,
+export type ConversationModel = Document & {
+    company: Types.ObjectId,
+    owner: Types.ObjectId,
     conversationType: string,
     conversationName: string,
-    participants: mongoose.Types.ObjectId
+    participants: Types.ObjectId[]
 };
 
-const conversationSchema = new mongoose.Schema({
-    companyId: mongoose.Schema.Types.ObjectId,
-    owner: mongoose.Schema.Types.ObjectId,
+const conversationSchema = new Schema({
+    company: {type: Schema.Types.ObjectId, ref: "Company"},
+    owner: {type: Schema.Types.ObjectId, ref: "User"},
     conversationType: String,
     conversationName: String,
-    participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }]
+    participants: [{ type: Schema.Types.ObjectId, ref: "Users" }]
 }, { timestamps: true });
 
-const Conversation = mongoose.model("Conversation", conversationSchema);
-export default Conversation;
+
+export default model("Conversation", conversationSchema);

@@ -1,36 +1,26 @@
+import { Schema, model, Types, Document, Error } from "mongoose";
 import * as bcrypt from "bcrypt-nodejs";
 import * as crypto from "crypto";
-import * as mongoose from "mongoose";
 
-import { NotificationModel } from "./Notification";
-import { ConversationModel } from "./Conversation";
-import { ProjectModel } from "./Project";
-import { SkillModel } from "./Skill";
-import { TeamModel } from "./Team";
-import { GroupModel } from "./Group";
-
-export type UserModel = mongoose.Document & {
+export type UserModel = Document & {
   email: string,
   password: string,
   passwordResetToken: string,
   passwordResetExpires: Date,
-
-  companyId: mongoose.Types.ObjectId,
-  roleId: mongoose.Types.ObjectId,
+  company: Types.ObjectId,
+  role: Types.ObjectId,
   doj: Date,
-  fte: Date,
-  conversations: Array<ConversationModel>,
-  notifications: Array<NotificationModel>,
-  projects: Array<ProjectModel>,
-  skills: [SkillModel, number],
-  teams: Array<TeamModel>,
-  groups: Array<GroupModel>,
-  contacts: Array<mongoose.Types.ObjectId>,
-
-
-  facebook: string,
-  tokens: AuthToken[],
-
+  fte: string,
+  skills: [
+    {
+      skill: Types.ObjectId,
+      grade: Number
+    }
+  ],
+  conversations: Types.ObjectId[],
+  teams: Types.ObjectId[],
+  groups: Types.ObjectId[],
+  contacts: Types.ObjectId[],
   profile: {
     firstName: string,
     lastName: string,
@@ -40,40 +30,32 @@ export type UserModel = mongoose.Document & {
     portfolio: string,
     picture: string
   },
-
   comparePassword: (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void,
   gravatar: (size: number) => string
 };
 
-export type AuthToken = {
-  accessToken: string,
-  kind: string
-};
-
-const userSchema = new mongoose.Schema({
-  email: { type: String, unique: true },
+const userSchema = new Schema({
+  email: {type: String, unique: true},
   password: String,
   passwordResetToken: String,
   passwordResetExpires: Date,
-
-
-  companyId: mongoose.Schema.Types.ObjectId,
-  roleId: mongoose.Schema.Types.ObjectId,
+  company: {type: Schema.Types.ObjectId, ref: "Company"},
+  role: {type: Schema.Types.ObjectId, ref: "Role"},
   doj: Date,
-  fte: Date,
-  conversations: [],
-  notifications: [],
-  projects: [],
-  skills: [],
-  teams: [],
-  groups: [],
-  contacts: [],
-
-  facebook: String,
-  twitter: String,
-  google: String,
-  tokens: Array,
-
+  fte: String,
+  conversations: [
+    {type: Schema.Types.ObjectId, ref: "Conversation"}
+  ],
+  skills: [{ type: Schema.Types.ObjectId, ref: "Skill" }],
+  teams: [
+    {type: Schema.Types.ObjectId, ref: "Team"}
+  ],
+  groups: [
+    {type: Schema.Types.ObjectId, ref: "Group"}
+  ],
+  contacts: [
+    {type: Schema.Types.ObjectId, ref: "User"}
+  ],
   profile: {
     firstName: String,
     lastName: String,
@@ -92,7 +74,7 @@ userSchema.pre("save", function save(next) {
   if (!user.isModified("password")) { return next(); }
   bcrypt.genSalt(10, (err, salt) => {
     if (err) { return next(err); }
-    bcrypt.hash(user.password, salt, undefined, (err: mongoose.Error, hash) => {
+    bcrypt.hash(user.password, salt, undefined, (err: Error, hash) => {
       if (err) { return next(err); }
       user.password = hash;
       next();
@@ -101,7 +83,7 @@ userSchema.pre("save", function save(next) {
 });
 
 userSchema.methods.comparePassword = function (candidatePassword: string, cb: (err: any, isMatch: any) => {}) {
-  bcrypt.compare(candidatePassword, this.password, (err: mongoose.Error, isMatch: boolean) => {
+  bcrypt.compare(candidatePassword, this.password, (err: Error, isMatch: boolean) => {
     cb(err, isMatch);
   });
 };
@@ -122,5 +104,5 @@ userSchema.methods.gravatar = function (size: number) {
 };
 
 // export const User: UserType = mongoose.model<UserType>('User', userSchema);
-const User = mongoose.model("User", userSchema);
-export default User;
+
+export default model("User", userSchema);
