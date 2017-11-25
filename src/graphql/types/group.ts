@@ -12,7 +12,7 @@ import {
 } from "graphql";
 
 export const groupType = new GraphQLObjectType({
-    name: "group",
+    name: "Group",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         company: {
@@ -31,7 +31,7 @@ export const groupType = new GraphQLObjectType({
     })
 });
 export const groupInputType = new GraphQLInputObjectType({
-    name: "groupInput",
+    name: "GroupInput",
     fields: {
         company: {type: GraphQLID},
         name: {type: GraphQLString},

@@ -5,7 +5,7 @@ import {
 } from "graphql";
 
 export const profile = new GraphQLObjectType({
-    name: "profile",
+    name: "Profile",
     fields: () => ({
         firstName: { type: GraphQLString },
         lastName: { type: GraphQLString },
@@ -17,7 +17,7 @@ export const profile = new GraphQLObjectType({
 });
 
 export const profileInput = new GraphQLInputObjectType({
-    name: "profileInput",
+    name: "ProfileInput",
     fields: () => ({
         firstName: { type: GraphQLString },
         lastName: { type: GraphQLString },

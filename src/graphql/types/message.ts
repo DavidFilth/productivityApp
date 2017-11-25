@@ -12,7 +12,7 @@ import {
 } from "graphql";
 
 export const messageType = new GraphQLObjectType({
-    name: "message",
+    name: "Message",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         user: {
@@ -33,7 +33,7 @@ export const messageType = new GraphQLObjectType({
     })
 });
 export const messageInputType = new GraphQLInputObjectType({
-    name: "messageInput",
+    name: "MessageInput",
     fields: {
         user: {type: GraphQLID},
         conversation: {type: GraphQLID},

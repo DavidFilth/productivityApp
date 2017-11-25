@@ -12,7 +12,7 @@ import {
 } from "graphql";
 
 export const articleType = new GraphQLObjectType({
-    name: "article",
+    name: "Article",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         company: {
@@ -28,7 +28,7 @@ export const articleType = new GraphQLObjectType({
 });
 
 export const articleInputType = new GraphQLInputObjectType({
-    name: "articleInput",
+    name: "ArticleInput",
     fields: () => ({
         company: {type: GraphQLID},
         author: {type: GraphQLString},

@@ -11,7 +11,7 @@ import {
 } from "graphql";
 
 export const roleType = new GraphQLObjectType({
-    name: "role",
+    name: "Role",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         name: {type: GraphQLString},
@@ -27,7 +27,7 @@ export const roleType = new GraphQLObjectType({
 });
 
 export const roleInputType = new GraphQLInputObjectType({
-    name: "roleInput",
+    name: "RoleInput",
     fields: {
         name: {type: GraphQLString},
         company: {type: GraphQLID},

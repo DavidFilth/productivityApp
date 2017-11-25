@@ -15,7 +15,7 @@ import {
 import { resolve } from "dns";
 
 export const conversationType = new GraphQLObjectType({
-    name: "conversation",
+    name: "Conversation",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         conversationType: {type: new GraphQLNonNull(GraphQLString)},
@@ -42,7 +42,7 @@ export const conversationType = new GraphQLObjectType({
 });
 
 export const conversationInputType = new GraphQLInputObjectType({
-    name: "conversationInput",
+    name: "ConversationInput",
     fields: () => ({
         company: { type: GraphQLID },
         owner: { type: GraphQLID },

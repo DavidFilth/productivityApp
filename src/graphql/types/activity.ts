@@ -16,7 +16,7 @@ import {
 } from "graphql";
 
 export const activityType = new GraphQLObjectType({
-    name: "activity",
+    name: "Activity",
     fields: () => ({
         _id: { type: new GraphQLNonNull(GraphQLID) },
         company: { 
@@ -43,7 +43,7 @@ export const activityType = new GraphQLObjectType({
     })
 });
 export const activityInputType = new GraphQLInputObjectType({
-    name: "activityInput",
+    name: "ActivityInput",
     fields: () => ({
         company: {type: GraphQLID },
         project: {type: GraphQLID},

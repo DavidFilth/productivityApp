@@ -1,7 +1,8 @@
 import * as casual from "casual";
+import { MockList } from "graphql-tools";
 
 export default {
-    profile: () => ({
+    Profile: () => ({
         firstName: casual._first_name(),
         lastName: casual._last_name(),
         gender: casual._coin_flip() ? "male" : "female",
@@ -9,74 +10,100 @@ export default {
         portfolio: casual._url(),
         picture: casual._url()
     }),
-    company: () => ({
+    Company: () => ({
         name: casual._company_name(),
         alias: casual._company_suffix()
     }),
-    activity: () => ({
+    Activity: () => ({
         content: casual._text(),
         progress: casual.integer(0, 100),
+        users: () => new MockList([2, 3])
     }),
-    article: () => ({
+    Article: () => ({
         author: casual._name(),
         title: casual._title(),
         content: casual._text()
     }),
-    conversation: () => ({
+    Conversation: () => ({
         conversationType: casual._coin_flip() ? "ptop" : "group",
-        conversationName: casual._word()
+        conversationName: casual._word(),
+        participants: () => new MockList([1, 5])
     }),
-    date: () => new Date(),
-    designation: () => ({
+    Date: () => new Date(),
+    Designation: () => ({
         name: casual._title()
     }),
-    empType: () => ({
+    EmpType: () => ({
         name: casual._title()
     }),
-    group: () => ({
-        name: casual.words(3)
+    Group: () => ({
+        name: casual.words(3),
+        members: () => new MockList([2, 6])
     }),
-    jobTitle: () => ({
+    JobTitle: () => ({
         name: casual._title()
     }),
-    masterGroup: () => ({
-        name: casual._company_suffix()
+    MasterGroup: () => ({
+        name: casual._company_suffix(),
+        members: () =>  new MockList([4, 6])
     }),
-    message: () => ({
+    Message: () => ({
         msgContent: casual._sentence(),
         msgType: casual._word()
     }),
-    notification: () => ({
+    Notification: () => ({
         content: casual._description(),
         sender: casual._name(),
-        notifType: casual._word()
+        notifType: casual._word(),
+        users: () => new MockList([1, 3])
     }),
-    project: () => ({
+    Project: () => ({
         name: casual._catch_phrase(),
-        status: casual._coin_flip() ? "completed" : "in progress"
+        status: casual._coin_flip() ? "completed" : "in progress",
+        skillRequired: () => new MockList([5, 10]),
+        assets: () => new MockList([6, 10]),
+        teams: () => new MockList([1, 3])
     }),
-    role: () => ({
+    Role: () => ({
         name: casual._title(),
         alias: casual._word(),
         permissions: casual.array_of_words()
     }),
-    seniorityLvl: () => ({
+    SeniorityLvl: () => ({
         name: casual._title()
     }),
-    skill: () => ({
+    Skill: () => ({
         name: casual.words(2)
     }),
-    team: () => ({
+    Team: () => ({
         name: casual.words(3),
         location: casual._city(),
+        members: () => new MockList([5])
     }),
-    meetings: () => ({
+    Meetings: () => ({
         location: casual._city()
     }),
     User: () => ({
         email: casual._email(),
         password: casual._password(),
         passwordResetToken: casual._password(),
-        fte: casual._word()
+        fte: casual._word(),
+        conversation: () => new MockList([7, 10]),
+        projects: () => new MockList([1, 3]),
+        notifications: () => new MockList([3, 6]),
+        skills: () => new MockList([5, 10]),
+        contacts: () => new MockList([5, 6])
+    }),
+    Vacancy: () => ({
+        name: casual._title(),
+        location: casual._city(),
+        telecommuting: casual._coin_flip(),
+        categories: casual.array_of_words(5),
+        description: casual._description(),
+        responsabilities: casual._description(),
+        qualifications: casual._description(),
+        optQualifications: casual._description(),
+        otherDetails: casual._short_description(),
+        applicants: () => new MockList([1, 9]) 
     })
 };

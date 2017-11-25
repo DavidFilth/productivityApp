@@ -1,7 +1,7 @@
 import { GraphQLScalarType, GraphQLError, Kind } from "graphql";
 
 export const DateType = new GraphQLScalarType({
-    name: "date",
+    name: "Date",
     description: "Date objects are based on a time value that is the number of milliseconds since January 1st, 1970 UTC.",
     serialize(value) {
         if (!(value instanceof Date)) {

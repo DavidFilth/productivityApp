@@ -11,7 +11,7 @@ import {
 } from "graphql";
 
 export const masterGroupType = new GraphQLObjectType({
-    name: "masterGroup",
+    name: "MasterGroup",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         name: {type: GraphQLString},
@@ -26,7 +26,7 @@ export const masterGroupType = new GraphQLObjectType({
 });
 
 export const masterGroupInputType = new GraphQLInputObjectType({
-    name: "masterGroupInput",
+    name: "MasterGroupInput",
     fields: () => ({
         company: {type: GraphQLID},
         name: {type: GraphQLString},

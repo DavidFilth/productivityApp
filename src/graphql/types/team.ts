@@ -16,7 +16,7 @@ import {
 } from "graphql";
 
 export const meetingType = new GraphQLObjectType({
-    name: "meeting",
+    name: "Meeting",
     fields: {
         date: {type: DateType},
         time: {type: DateType},
@@ -25,7 +25,7 @@ export const meetingType = new GraphQLObjectType({
 });
 
 export const teamType = new GraphQLObjectType({
-    name: "team",
+    name: "Team",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         name: {type: GraphQLString},
@@ -47,7 +47,7 @@ export const teamType = new GraphQLObjectType({
 });
 
 export const meetingInputType = new GraphQLInputObjectType({
-    name: "meetingInput",
+    name: "MeetingInput",
     fields: {
         date: {type: DateType},
         time: {type: DateType},
@@ -56,7 +56,7 @@ export const meetingInputType = new GraphQLInputObjectType({
 });
 
 export const teamInputType = new GraphQLInputObjectType({
-    name: "teamInput",
+    name: "TeamInput",
     fields: {
         company: {type: GraphQLID},
         name: {type: GraphQLString},

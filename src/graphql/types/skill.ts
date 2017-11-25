@@ -11,7 +11,7 @@ import {
 } from "graphql";
 
 export const skillType = new GraphQLObjectType({
-    name: "skill",
+    name: "Skill",
     fields: {
         _id: {type: new GraphQLNonNull(GraphQLID)},
         name: {type: GraphQLString}
@@ -19,7 +19,7 @@ export const skillType = new GraphQLObjectType({
 });
 
 export const skillInputType = new GraphQLInputObjectType({
-    name: "skillInput",
+    name: "SkillInput",
     fields: {
         name: {type: GraphQLString}
     }

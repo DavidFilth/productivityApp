@@ -12,7 +12,7 @@ import {
 } from "graphql";
 
 export const notificationType = new GraphQLObjectType({
-    name: "notification",
+    name: "Notification",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         content: {type: GraphQLString},
@@ -34,7 +34,7 @@ export const notificationType = new GraphQLObjectType({
 });
 
 export const notificationInputType = new GraphQLInputObjectType({
-    name: "notificationInput",
+    name: "NotificationInput",
     fields: {
         company: {type: GraphQLID},
         content: {type: GraphQLString},

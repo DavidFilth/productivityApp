@@ -10,7 +10,7 @@ import {
 } from "graphql";
 
 export const jobTitleType = new GraphQLObjectType({
-    name: "jobTitle",
+    name: "JobTitle",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         company: {
@@ -24,7 +24,7 @@ export const jobTitleType = new GraphQLObjectType({
 });
 
 export const jobTitleInputType = new GraphQLInputObjectType({
-    name: "jobTitleInput",
+    name: "JobTitleInput",
     fields: {
         company: {type: GraphQLID},
         name: {type: GraphQLString}

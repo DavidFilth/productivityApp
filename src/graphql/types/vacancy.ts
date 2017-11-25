@@ -20,7 +20,7 @@ import {
 } from "graphql";
 
 export const vacancyType = new GraphQLObjectType({
-    name: "vacancy",
+    name: "Vacancy",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         name: {type: GraphQLString},
@@ -66,7 +66,7 @@ export const vacancyType = new GraphQLObjectType({
 });
 
 export const vacancyInputType = new GraphQLInputObjectType({
-    name: "vacancyInput",
+    name: "VacancyInput",
     fields: {
         company: {type: GraphQLID},
         name: {type: GraphQLString},

@@ -11,7 +11,7 @@ import {
 } from "graphql";
 
 export const seniorityLvlType = new GraphQLObjectType({
-    name: "seniorityLvl",
+    name: "SeniorityLvl",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         company: {
@@ -24,7 +24,7 @@ export const seniorityLvlType = new GraphQLObjectType({
     })
 });
 export const seniorityLvlInputType = new GraphQLInputObjectType({
-    name: "seniorityLvlInput",
+    name: "SeniorityLvlInput",
     fields: {
         company: {type: GraphQLID},
         name: {type: GraphQLString}

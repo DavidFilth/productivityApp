@@ -9,7 +9,7 @@ import {
 } from "graphql";
 
 export const designationType = new GraphQLObjectType({
-    name: "designation",
+    name: "Designation",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         company: {
@@ -23,7 +23,7 @@ export const designationType = new GraphQLObjectType({
 });
 
 export const designationInputType = new GraphQLInputObjectType({
-    name: "designationInput",
+    name: "DesignationInput",
     fields: {
         company: {type: GraphQLID},
         name: {type: GraphQLString}
