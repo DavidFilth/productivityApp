@@ -1,6 +1,5 @@
-import Dashboard from '../dashboard/dashboard';
 import OptionallyDisplayed from '../util/optionallyDisplayed';
-import Footer from '../footer/footer';
+import Dashboard from '../dashboard/dashboard';
 import Signup from '../signup/signup';
 import Login from '../login/login';
 import Home from '../home/home';
@@ -161,7 +160,6 @@ export default class Navbar extends React.Component<{}, NavBarState> {
             <Route path="/network" component={Dashboard} />
             <Redirect path="*" to="/" />
           </Switch>
-          <Footer/>
         </div>
       </Router>
     );

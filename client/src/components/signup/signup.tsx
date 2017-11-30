@@ -1,11 +1,12 @@
 import { client } from '../../util/graphql/client';
-import gql from 'graphql-tag';
 import * as update from 'immutability-helper';
 import * as React from 'react';
+import gql from 'graphql-tag';
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import './style.css';
 
 class SignUp extends React.Component<
-    {}, 
+    RouteComponentProps<{}>, 
     {
         form: {
             firstName: string;
@@ -16,7 +17,7 @@ class SignUp extends React.Component<
             confirmPass: string
         }
     }> {
-    constructor(props: {}) {
+    constructor(props: RouteComponentProps<{}>) {
         super(props);
         this.state = {
             form: {
@@ -33,9 +34,10 @@ class SignUp extends React.Component<
     }
     handleSubmitClicked(e: React.UIEvent<HTMLFormElement>) {
         e.preventDefault();
-        client.mutate({mutation: gql`{
-                mutation addUserMutation{
-                    addUser(
+        client.mutate({mutation: gql`
+            mutation{
+                addUser(
+                    data: {
                         email: "${this.state.form.email}",
                         password: "${this.state.form.email}",
                         profile: {
@@ -43,16 +45,22 @@ class SignUp extends React.Component<
                             lastName: "${this.state.form.lastName}",
                             location: "${this.state.form.location}",
                         }
-                    ){
-                        _id,
-                        email,
-                        profile{
-                            firstName,
-                            lastName
-                        }
+                    }
+                ){
+                    _id,
+                    email,
+                    profile{
+                        firstName,
+                        lastName
                     }
                 }
-        }`}).then(console.log);
+            }
+        `}).then((res) => {
+            if(res.data){
+                console.log('Added new user: ' + res.data['addUser'] );
+                this.props.history.push('/login');
+            } 
+        });
         return false;
     }
     handleFieldChanged(field: string) {
@@ -242,4 +250,4 @@ class SignUp extends React.Component<
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);
