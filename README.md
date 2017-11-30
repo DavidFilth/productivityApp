@@ -10,9 +10,9 @@ Express TypeScript Starter
 - Install [MongoDB](https://docs.mongodb.com/manual/installation/)
 - Install [VS Code](https://code.visualstudio.com/)
 
-#WorkArounds
+# WorkArounds
 - Problem with the React-Apollo Library follow this league: https://github.com/apollographql/react-apollo/issues/1286 
--Problem with the Apollo-client Dependency just go to:
+- Problem with the Apollo-client Dependency just go to:
     client/node_modules/apollo-cache-inmemory/src/inMemoryCache.ts and replace line 76 with:
     public read<T>(query: Cache.ReadOptions): T {
 
