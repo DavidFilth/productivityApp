@@ -19,7 +19,8 @@
     "build-sass": "node-sass src/public/css/main.scss dist/public/css/main.css",
     "watch-sass": "node-sass -w src/public/css/main.scss dist/public/css/main.css",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
-    "copy-static-assets": "node copyStaticAssets.js"
+    "copy-static-assets": "node copyStaticAssets.js",
+    "start-client": "cd client && npm start"
   },
   "jest": {
     "globals": {

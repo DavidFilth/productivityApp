@@ -10,6 +10,12 @@ Express TypeScript Starter
 - Install [MongoDB](https://docs.mongodb.com/manual/installation/)
 - Install [VS Code](https://code.visualstudio.com/)
 
+#WorkArounds
+- Problem with the React-Apollo Library follow this league: https://github.com/apollographql/react-apollo/issues/1286 
+-Problem with the Apollo-client Dependency just go to:
+    client/node_modules/apollo-cache-inmemory/src/inMemoryCache.ts and replace line 76 with:
+    public read<T>(query: Cache.ReadOptions): T {
+
 # Getting started
 - Clone the repository
 ```
@@ -22,13 +28,17 @@ npm install
 ```
 - Start your mongoDB server (you'll probably want another command prompt)
 ```
+npm run start-client
+```
+- Start your Client server in port 3000
+```
 mongod
 ```
 - Build and run the project
 ```
 npm start
 ```
-Navigate to `http://localhost:3000`
+Navigate to `http://localhost:4000`
 
 # TypeScript + Node 
 The main purpose of this repository is to show a good end-to-end project setup and workflow for writing Node code in TypeScript.

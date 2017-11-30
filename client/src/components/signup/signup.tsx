@@ -95,7 +95,7 @@ class SignUp extends React.Component<
                                         placeholder="Jhonny" 
                                         type="text" 
                                         id="firstname"
-                                        onChange={this.handleFieldChanged("firstName")}
+                                        onChange={this.handleFieldChanged('firstName')}
                                     />
                                 </div>
                             </div>
@@ -119,7 +119,7 @@ class SignUp extends React.Component<
                                         placeholder="Smith" 
                                         type="text" 
                                         id="lastname"
-                                        onChange={this.handleFieldChanged("lastName")}
+                                        onChange={this.handleFieldChanged('lastName')}
                                     />
                                 </div>
                             </div>
@@ -143,7 +143,7 @@ class SignUp extends React.Component<
                                         placeholder="Anaheim,CA" 
                                         type="text" 
                                         id="location"
-                                        onChange={this.handleFieldChanged("location")}
+                                        onChange={this.handleFieldChanged('location')}
                                     />
                                 </div>
                             </div>
@@ -167,7 +167,7 @@ class SignUp extends React.Component<
                                         placeholder="1234" 
                                         type="email" 
                                         id="email"
-                                        onChange={this.handleFieldChanged("email")} 
+                                        onChange={this.handleFieldChanged('email')} 
                                     />
                                 </div>
                             </div>
@@ -191,7 +191,7 @@ class SignUp extends React.Component<
                                         placeholder="1234" 
                                         type="password" 
                                         id="password"
-                                        onChange={this.handleFieldChanged("password")}
+                                        onChange={this.handleFieldChanged('password')}
                                     />
                                 </div>
                             </div>
@@ -215,7 +215,7 @@ class SignUp extends React.Component<
                                         placeholder="1234" 
                                         type="password" 
                                         id="confirmPass"
-                                        onChange={this.handleFieldChanged("confirmPass")}
+                                        onChange={this.handleFieldChanged('confirmPass')}
                                     />
                                 </div>
                             </div>
