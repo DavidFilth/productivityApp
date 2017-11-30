@@ -78,7 +78,7 @@ export default {
     Team: () => ({
         name: casual.words(3),
         location: casual._city(),
-        members: () => new MockList([5])
+        members: () => new MockList([4, 5])
     }),
     Meetings: () => ({
         location: casual._city()
@@ -92,7 +92,8 @@ export default {
         projects: () => new MockList([1, 3]),
         notifications: () => new MockList([3, 6]),
         skills: () => new MockList([5, 10]),
-        contacts: () => new MockList([5, 6])
+        contacts: () => new MockList([5, 6]),
+        teams: () => new MockList([1, 2])
     }),
     Vacancy: () => ({
         name: casual._title(),

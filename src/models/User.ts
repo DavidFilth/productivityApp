@@ -30,7 +30,7 @@ export type UserModel = Document & {
     portfolio: string,
     picture: string
   },
-  comparePassword: (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void,
+  comparePassword: (candidatePassword: string) => boolean,
   gravatar: (size: number) => string
 };
 
@@ -82,10 +82,8 @@ userSchema.pre("save", function save(next) {
   });
 });
 
-userSchema.methods.comparePassword = function (candidatePassword: string, cb: (err: any, isMatch: any) => {}) {
-  bcrypt.compare(candidatePassword, this.password, (err: Error, isMatch: boolean) => {
-    cb(err, isMatch);
-  });
+userSchema.methods.comparePassword = function (candidatePassword: string) {
+  return bcrypt.compareSync(candidatePassword, this.password);
 };
 
 

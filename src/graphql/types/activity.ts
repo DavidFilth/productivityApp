@@ -17,6 +17,7 @@ import {
 
 export const activityType = new GraphQLObjectType({
     name: "Activity",
+    description: "The Activity Object type represents an activity related to a company and an specific project",
     fields: () => ({
         _id: { type: new GraphQLNonNull(GraphQLID) },
         company: { 
@@ -44,6 +45,7 @@ export const activityType = new GraphQLObjectType({
 });
 export const activityInputType = new GraphQLInputObjectType({
     name: "ActivityInput",
+    description: "The ActivityInput is an InputObject type used to create or update an Activity object",
     fields: () => ({
         company: {type: GraphQLID },
         project: {type: GraphQLID},

@@ -1,0 +1,16 @@
+/*==================================================
+  Header
+  ==================================================*/
+
+  nav span.menu-icon {
+	display: block;
+	font-size: 1.8em;
+}
+nav span.menu-icon {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.form-row label {
+    color: #fff;
+}

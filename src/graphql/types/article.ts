@@ -13,6 +13,7 @@ import {
 
 export const articleType = new GraphQLObjectType({
     name: "Article",
+    description: "The Article Object type represents an article related to a company with an author, title and content",
     fields: () => ({
         _id: {type: new GraphQLNonNull(GraphQLID)},
         company: {
@@ -29,6 +30,7 @@ export const articleType = new GraphQLObjectType({
 
 export const articleInputType = new GraphQLInputObjectType({
     name: "ArticleInput",
+    description: "The ArticleInput is an InputObject type used to create or update an Article object",
     fields: () => ({
         company: {type: GraphQLID},
         author: {type: GraphQLString},

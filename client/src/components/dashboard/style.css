@@ -1,32 +1,7 @@
 /*==================================================
-  Common
-  ==================================================*/
-
-/*==================================================
-  Typography
-  ==================================================*/
-
-/*==================================================
-  Header
-  ==================================================*/
-
-nav span.menu-icon {
-	display: block;
-	font-size: 1.8em;
-}
-nav span.menu-icon {
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
-.form-row label {
-    color: #fff;
-}
-
-/*==================================================
   Post Component CSS
   ==================================================*/
-.post-content{
+  .post-content{
 	background: #f8f8f8;
 	border-radius: 4px;
 	width: 100%;
@@ -190,7 +165,7 @@ padding-left: 35px;
 }
 .panel.ks-solid>.ks-user1 {
     padding: 21px 74px;
-	background: url(../images/images/bg01.jpg) center/cover;
+	background: url(https://i.pinimg.com/736x/b5/42/a2/b542a23e86e1340425b1516dd779fb0f.jpg) center/cover;
 }
 .ks-avatar1 {
 	position: relative;
@@ -350,24 +325,4 @@ padding-left: 35px;
 .ks-social-profile .ks-social-profile-body .ks-feed .ks-post .ks-footer>.ks-block>.ks-control>.ks-amount {
     color: #333;
     font-size: 12px;
-}
-/*==================================================
-  Footer
-  ==================================================*/
-
-footer{
-   background-color: #424558;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 35px;
-    text-align: center;
-    color: #CCC;
-}
-
-footer p {
-    padding: 10.5px;
-    margin: 0px;
-    line-height: 100%;
 }
