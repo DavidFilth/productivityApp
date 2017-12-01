@@ -1,12 +1,5 @@
 import { Schema, model, Types, Document } from "mongoose";
 
-export type RoleModel = Document & {
-    name: string;
-    alias: string;
-    permissions: string;
-    company: Types.ObjectId
-};
-
 const roleSchema = new Schema({
     name: { type: String, required: true },
     alias: String,

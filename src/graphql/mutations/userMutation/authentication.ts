@@ -1,12 +1,12 @@
 import { userInputType, userType } from "../../types/user";
 import { GraphQLNonNull, GraphQLString } from "graphql";
-import { UserModel as UserModelInterface, default as UserModel } from "../../../models/User";
+import UserModel from "../../../models/User";
 import jwtStrategy from "../../../auth/jwt-auth";
 import * as _ from "lodash";
 
 export default {
     login: {
-        type: GraphQLString,
+        type: userType,
         args: {
             email: {
                 name: "email",
@@ -18,8 +18,8 @@ export default {
             }
         },
         resolve: async (root: object, args: any, global) => {
-            let response = "Invalid username or password";
-            const user = await UserModel.findOne({email: args.email}).exec((err, user: UserModelInterface) => {
+            let isValid = false;
+            const user = await UserModel.findOne({email: args.email}).exec((err, user: CustomInterfaces.UserInterface) => {
                 if (err) {
                     console.error(err);
                     return;
@@ -34,10 +34,10 @@ export default {
                         "profile"
                     ]));
                     global.res.cookie("token", token);
-                    response  = "You are now authenticated";
+                    isValid = true;
                 }
             });
-            return response;
+            return isValid ? user : undefined;
         }
     },
     logout: {

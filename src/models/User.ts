@@ -2,38 +2,6 @@ import { Schema, model, Types, Document, Error } from "mongoose";
 import * as bcrypt from "bcrypt-nodejs";
 import * as crypto from "crypto";
 
-export type UserModel = Document & {
-  email: string,
-  password: string,
-  passwordResetToken: string,
-  passwordResetExpires: Date,
-  company: Types.ObjectId,
-  role: Types.ObjectId,
-  doj: Date,
-  fte: string,
-  skills: [
-    {
-      skill: Types.ObjectId,
-      grade: Number
-    }
-  ],
-  conversations: Types.ObjectId[],
-  teams: Types.ObjectId[],
-  groups: Types.ObjectId[],
-  contacts: Types.ObjectId[],
-  profile: {
-    firstName: string,
-    lastName: string,
-    gender: string,
-    birthday: Date,
-    location: string,
-    portfolio: string,
-    picture: string
-  },
-  comparePassword: (candidatePassword: string) => boolean,
-  gravatar: (size: number) => string
-};
-
 const userSchema = new Schema({
   email: {type: String, unique: true},
   password: String,
