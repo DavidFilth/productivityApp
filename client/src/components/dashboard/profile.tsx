@@ -1,17 +1,6 @@
 import * as React from 'react';
 
-export interface ProfileProps {
-    profile: {
-        lastName: string;
-        firstName: string;
-    };
-    company: {
-        name: string;
-    };
-    notifications: Array<{}>;
-}
-
-class Profile extends React.Component<ProfileProps> {
+class Profile extends React.Component<CustomInterfaces.UserInterface> {
 
     render() {
         return (

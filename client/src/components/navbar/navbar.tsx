@@ -1,6 +1,7 @@
 import OptionallyDisplayed from '../util/optionallyDisplayed';
 import Dashboard from '../dashboard/dashboard';
 import Signup from '../signup/signup';
+import Logout from '../logout/logout';
 import Login from '../login/login';
 import Home from '../home/home';
 import * as React from 'react';
@@ -14,15 +15,27 @@ import {
 } from 'react-router-dom';
 
 export interface NavBarState {
-  auth: boolean;
+  user: CustomInterfaces.UserInterface | null;
 }
 
 export default class Navbar extends React.Component<{}, NavBarState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      auth: false
+      user: null
     };
+    this.handleUserLogout = this.handleUserLogout.bind(this);
+    this.handleUserLogin = this.handleUserLogin.bind(this);
+  }
+  handleUserLogin(user: CustomInterfaces.UserInterface) {
+    this.setState({
+      user: user
+    });
+  }
+  handleUserLogout() {
+    this.setState({
+      user: null
+    });
   }
   render() {
     return (
@@ -49,7 +62,7 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                     Home
                   </NavLink>
                 </li>
-                <OptionallyDisplayed display={this.state.auth}>
+                <OptionallyDisplayed display={!!this.state.user}>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/network">
                       <span className="menu-icon fa fa-share-alt-square" />
@@ -57,7 +70,7 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                     </NavLink>
                   </li>
                 </OptionallyDisplayed>
-                <OptionallyDisplayed display={this.state.auth}>
+                <OptionallyDisplayed display={!!this.state.user}>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/project">
                       <span className="menu-icon fa fa-suitcase" />
@@ -66,7 +79,7 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                     
                   </li>
                 </OptionallyDisplayed>
-                <OptionallyDisplayed display={this.state.auth}>
+                <OptionallyDisplayed display={!!this.state.user}>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/team">
                       <span className="menu-icon fa fa-users" />
@@ -74,7 +87,7 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                     </NavLink>
                   </li>
                 </OptionallyDisplayed>
-                <OptionallyDisplayed display={this.state.auth}>
+                <OptionallyDisplayed display={!!this.state.user}>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/employee">
                       <span className="menu-icon fa fa-user" />
@@ -82,7 +95,7 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                     </NavLink>
                   </li>
                 </OptionallyDisplayed>
-                <OptionallyDisplayed display={this.state.auth}>
+                <OptionallyDisplayed display={!!this.state.user}>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/messenger">
                       <span className="menu-icon fa fa-comments" />
@@ -90,7 +103,7 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                     </NavLink>
                   </li>
                 </OptionallyDisplayed>
-                <OptionallyDisplayed display={!this.state.auth}>
+                <OptionallyDisplayed display={!this.state.user}>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/register">
                       <span className="menu-icon fa fa-pencil-square-o" />
@@ -98,7 +111,7 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                     </NavLink>
                   </li>
                 </OptionallyDisplayed>
-                <OptionallyDisplayed display={!this.state.auth}>
+                <OptionallyDisplayed display={!this.state.user}>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/login">
                       <span className="menu-icon fa fa-sign-in" />
@@ -106,7 +119,7 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                     </NavLink>
                   </li>
                 </OptionallyDisplayed>
-                <OptionallyDisplayed display={this.state.auth} >
+                <OptionallyDisplayed display={!!this.state.user} >
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/logout">
                     <span className="menu-icon fa fa-sign-out" />
@@ -115,7 +128,7 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                 </li>
                 </OptionallyDisplayed>
               </ul>
-              <OptionallyDisplayed display={!this.state.auth}>
+              <OptionallyDisplayed display={!this.state.user}>
                 <form>
                   <div className="form-row">
                     <div className="form-groupcol-md-5" >
@@ -156,8 +169,30 @@ export default class Navbar extends React.Component<{}, NavBarState> {
           <Switch>
             <Route exact={true} path="/" component={Home} />
             <Route path="/register" component={Signup} />
-            <Route path="/login" component={Login} />
-            <Route path="/network" component={Dashboard} />
+            <Route 
+              path="/network" 
+              render={(props) => {
+                return this.state.user ? 
+                  <Dashboard User={this.state.user} {...props} /> :
+                  <Redirect to="/login"/>;
+              }} 
+            />
+            <Route
+              path="/login"
+              render={(props) => {
+                return (
+                  <Login onLogUserIn={this.handleUserLogin} {...props} />
+                );
+              }} 
+            />
+            <Route 
+              path="/logout" 
+              render={(props) => {
+                return (
+                  <Logout onLogUserOut={this.handleUserLogout} {...props}/>
+                );
+              }}
+            />
             <Redirect path="*" to="/" />
           </Switch>
         </div>

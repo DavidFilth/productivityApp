@@ -1,8 +1,8 @@
-import { default as VacancyItem, VacancyItemProps } from './vacancyItem';
+import VacancyItem from './vacancyItem';
 import * as React from 'react';
 
 export interface VacancyListProps {
-    vacancies: Array<VacancyItemProps>;
+    vacancies: Array<CustomInterfaces.VacanyInterface>;
 }
 
 class VacancyList extends React.Component<VacancyListProps> {

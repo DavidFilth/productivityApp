@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { default as TeamItem, TeamProps as team } from './teamItem';
+import TeamItem from './teamItem';
 
 export interface TeamListProps {
-    teams: Array<team>;
+    teams: Array<CustomInterfaces.TeamInterface>;
 }
 
 class TeamList extends React.Component<TeamListProps> {

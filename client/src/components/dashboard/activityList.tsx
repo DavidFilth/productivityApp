@@ -1,8 +1,8 @@
-import { default as Activity, ActivityItemProps as activity } from './activityItem';
+import Activity from './activityItem';
 import * as React from 'react';
 
 export interface ActivityListProps {
-    activities: Array<activity>;
+    activities: Array<CustomInterfaces.ActivityInterface>;
 }
 
 class ActivityList extends React.Component<ActivityListProps> {

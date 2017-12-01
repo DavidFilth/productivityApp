@@ -1,12 +1,6 @@
 import * as React from 'react';
 
-export interface ArticleItemProps {
-    title: string;
-    author: string;
-    content: string;
-}
-
-class ArticleItem extends React.Component<ArticleItemProps> {
+class ArticleItem extends React.Component<CustomInterfaces.ArticleInterface> {
     render() {
         return (
             <div className="post-content">

@@ -1,8 +1,9 @@
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { client } from '../../util/graphql/client';
+import { ApolloQueryResult } from 'apollo-client';
 import * as update from 'immutability-helper';
 import * as React from 'react';
 import gql from 'graphql-tag';
-import { withRouter, RouteComponentProps } from 'react-router-dom'
 import './style.css';
 
 class SignUp extends React.Component<
@@ -55,11 +56,11 @@ class SignUp extends React.Component<
                     }
                 }
             }
-        `}).then((res) => {
-            if(res.data){
-                console.log('Added new user: ' + res.data['addUser'] );
-                this.props.history.push('/login');
-            } 
+        `}).then((res: ApolloQueryResult<{
+            addUser: CustomInterfaces.UserInterface;
+        }>) => {
+            console.log('Added new user: ' + res.data.addUser);
+            this.props.history.push('/login');
         });
         return false;
     }
@@ -172,7 +173,7 @@ class SignUp extends React.Component<
                                     </div>
                                     <input 
                                         className="form-control" 
-                                        placeholder="1234" 
+                                        placeholder="a@b.com" 
                                         type="email" 
                                         id="email"
                                         onChange={this.handleFieldChanged('email')} 

@@ -1,8 +1,8 @@
-import { default as ArticleItem, ArticleItemProps } from './articleItem'; 
+import ArticleItem from './articleItem'; 
 import * as React from 'react';
 
 export interface ArticleListProps {
-    articles: Array<ArticleItemProps>;
+    articles: Array<CustomInterfaces.ArticleInterface>;
 }
 
 class ArticleList extends React.Component<ArticleListProps> {

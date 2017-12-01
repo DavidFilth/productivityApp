@@ -1,10 +1,6 @@
 import * as React from 'react';
 
-export interface TeamProps {
-    members: Array<{ }>;
-}
-
-class TeamItem extends React.Component<TeamProps> {
+class TeamItem extends React.Component<CustomInterfaces.TeamInterface> {
     render() {
         const participants = this.props.members.map((val, ind) => (
             <div className="ks-user" key={'memb-' + ind}>

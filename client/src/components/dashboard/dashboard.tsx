@@ -1,9 +1,6 @@
-import { ActivityItemProps as activity } from './activityItem';
-import { ArticleItemProps as article } from './articleItem';
-import { VacancyItemProps as vacancy } from './vacancyItem';
-import { ProfileProps as profile } from './profile';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { client } from '../../util/graphql/client';
-import { TeamProps as team } from './teamItem';
+import { ApolloQueryResult } from 'apollo-client';
 import * as update from 'immutability-helper';
 import ActivityList from './activityList';
 import ArticleList from './articleList';
@@ -14,34 +11,41 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import './style.css';
 
-export interface DashboardState {
-    activities: Array<activity>;
-    articles: Array<article>;
-    vacancies: Array<vacancy>;
-    User: profile & {teams: Array<team>};
+export interface DashboardProps {
+    User: CustomInterfaces.UserInterface;
 }
 
-class Dassboard extends React.Component<{}, DashboardState> {
-    constructor(props: {}) {
+export interface DashboardState {
+    activities: Array<CustomInterfaces.ActivityInterface>;
+    articles: Array<CustomInterfaces.ArticleInterface>;
+    vacancies: Array<CustomInterfaces.VacanyInterface>;
+}
+
+class Dassboard extends React.Component< 
+    DashboardProps & RouteComponentProps<{}>, 
+    DashboardState> {
+    constructor(props: DashboardProps & RouteComponentProps<{}>) {
         super(props);
         this.state = {
             activities: [],
             articles: [],
-            vacancies: [],
-            User: {
-                profile: {firstName: '', lastName: ''},
-                company: {name: ''},
-                notifications: [],
-                teams: []
-            }
+            vacancies: []
         };
     }
+    componentWillMount() {
+        if (!this.props.User) {
+            this.props.history.push('/login');
+        }
+    }
     componentDidMount() {
+        if (!this.props.User) {
+            return;
+        }
         client.query({query: gql`
             {
-                Activities(company:"1245"){ 
-                    content,
-                    project{
+                Activities(company:"${this.props.User.company._id}"){ 
+                content,
+                    company{
                         name
                     },
                     dueAt,
@@ -49,57 +53,43 @@ class Dassboard extends React.Component<{}, DashboardState> {
                         email
                     }
                 }
-                Articles(company: "1245"){
+                Articles(company: "${this.props.User.company._id}"){
                     title,
                     author,
                     content
                 },
-                Vacancies(company: "1245"){
+                Vacancies(company: "${this.props.User.company._id}"){
                     name,
                     company{
                         name
                     },
                     location
-                },
-                User(id: "2514"){
-                    profile{
-                        lastName,
-                        firstName
-                    },
-                    company{
-                        name
-                    },
-                    notifications{
-                        content,
-                        sender
-                    },
-                    teams{
-                        name,
-                        members{
-                            email
-                        }
-                    }
                 }
             }
-        `}).then((res) => {
-            console.log(res.data);
+        `}).then((res: ApolloQueryResult<{
+            Activities: Array<CustomInterfaces.ActivityInterface>;
+            Articles: Array<CustomInterfaces.ArticleInterface>;
+            Vacancies: Array<CustomInterfaces.VacanyInterface>;
+        }>) => {
             this.setState(update(this.state, {
-                activities: {$set: res.data['Activities']},
-                articles: {$set: res.data['Articles']},
-                vacancies: {$set: res.data['Vacancies']},
-                User: {$set: res.data['User']}
+                activities: {$set: res.data.Activities},
+                articles: {$set: res.data.Articles},
+                vacancies: {$set: res.data.Vacancies}
             }));
          });
     }
     render() {
+        if (!this.props.User) {
+            return null;
+        }
         return (
                 <div id="page-contents">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-3 static">
-                                <Profile {...this.state.User} />
+                                <Profile {...this.props.User} />
                                 <div><p>&nbsp;</p></div>
-                                <TeamList teams={this.state.User.teams}/>
+                                <TeamList teams={this.props.User.teams}/>
                             </div>
                             <div className="col-md-6">
                                 <ActivityList activities={this.state.activities}/>
@@ -114,4 +104,4 @@ class Dassboard extends React.Component<{}, DashboardState> {
         );
     }
 }
-export default Dassboard;
+export default withRouter(Dassboard);

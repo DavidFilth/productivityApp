@@ -1,14 +1,6 @@
 import * as React from 'react';
 
-export interface VacancyItemProps {
-    name: string;
-    company: {
-        name: string;
-    };
-    location: string;
-}
-
-class VacancyItem extends React.Component<VacancyItemProps> {
+class VacancyItem extends React.Component<CustomInterfaces.VacanyInterface> {
     render() {
         return (
             <div className="follow-user">

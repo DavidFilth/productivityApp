@@ -1,22 +1,13 @@
 import * as React from 'react';
 
-export interface ActivityItemProps {
-    project: {
-        name: string;
-    };
-    dueAt: string;
-    content: string;
-    users: Array<{ }>;
-}
-
-class ActivityItem extends React.Component<ActivityItemProps> {
+class ActivityItem extends React.Component<CustomInterfaces.ActivityInterface> {
     render() {
         return (
             <div className="card panel panel-default ks-post">
                 <div className="ks-header">
                     <a href="#" className="ks-user">
                         <img className="ks-avatar" src="http://via.placeholder.com/110x110" width="36" height="36" />
-                        <span className="ks-name">{this.props.project.name}</span>
+                        <span className="ks-name">{this.props.company.name}</span>
                     </a>
                     <span className="ks-date-created">{this.props.dueAt}</span>
                 </div>

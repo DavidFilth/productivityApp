@@ -1,18 +1,28 @@
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { client } from '../../util/graphql/client';
 import * as update from 'immutability-helper';
+import { ApolloQueryResult } from 'apollo-client';
 import * as React from 'react';
+import gql from 'graphql-tag';
 import './style.css';
 
-class Login extends React.Component<{}, {form: {email: string, password: string}}> {
-    constructor(props: {}) {
+export interface LoginProps {
+    onLogUserIn(user: CustomInterfaces.UserInterface): void;
+}
+
+class Login extends React.Component<
+    RouteComponentProps<{}> & LoginProps , 
+    {form: {email: string, password: string}}> {
+    constructor(props: RouteComponentProps<{}> & LoginProps) {
         super(props);
-        this.handleFieldChanged = this.handleFieldChanged.bind(this);
-        this.handleSubmitClicked = this.handleSubmitClicked.bind(this);
         this.state = {
             form: {
                 email: '',
                 password: ''
             }
         };
+        this.handleFieldChanged = this.handleFieldChanged.bind(this);
+        this.handleSubmitClicked = this.handleSubmitClicked.bind(this);
     }
     handleFieldChanged(field: string) {
         return (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,11 +36,46 @@ class Login extends React.Component<{}, {form: {email: string, password: string}
     }
     handleSubmitClicked(e: React.UIEvent<HTMLFormElement>) {
         e.preventDefault();
+        client.mutate({ mutation: gql`
+            mutation{
+                login(
+                    email:"${this.state.form.email}",
+                    password:"${this.state.form.password}"
+                ){
+                    _id,
+                    email,
+                    company{
+                        _id,
+                        name
+                    },
+                    notifications{
+                        content,
+                        sender
+                    },
+                    teams{
+                        members{_id}
+                    },
+                    profile{
+                        firstName,
+                        lastName
+                    }
+                }
+            }
+        `
+        }).then((res: ApolloQueryResult<{
+            login: CustomInterfaces.UserInterface;
+        }>) => {
+            if (res.data) {
+                this.props.onLogUserIn(res.data.login);
+                this.props.history.push('/network');
+            }
+        });
+        return false;
     }
     render() {
         return (
             <div className="container">
-                <form className="form-horizontal">
+                <form className="form-horizontal" onSubmit={this.handleSubmitClicked}>
                     <div className="row">
                         <div className="col-md-3"/>
                         <div className="col-md-6">
@@ -103,4 +148,4 @@ class Login extends React.Component<{}, {form: {email: string, password: string}
         );
     }
 }
-export default Login;
+export default withRouter(Login);
