@@ -1,6 +1,9 @@
 import * as Rules from './rules';
 
-export const ruleRunnner: CustomInterfaces.RuleRunner = (field, name, ...rules) => {
+export type Runner = (form: object) => object | null;
+export type RuleRunner = (field: string, name: string, ...rules: Rules.Rule[]) => Runner;
+
+export const ruleRunnner: RuleRunner = (field, name, ...rules) => {
     return (form: CustomInterfaces.GenericForm) => {
         for (let rule of rules) {
             let errorMessageFunc = rule(form[field], form);
@@ -11,7 +14,7 @@ export const ruleRunnner: CustomInterfaces.RuleRunner = (field, name, ...rules) 
         return null;
     };
 };
-export const run = (form: CustomInterfaces.GenericForm, runners: Array<CustomInterfaces.Runner>): 
+export const run = (form: CustomInterfaces.GenericForm, runners: Array<Runner>): 
     CustomInterfaces.GenericForm | null => {
     const res = runners.reduce(
         (memo, runner) => {
