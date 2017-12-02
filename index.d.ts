@@ -142,4 +142,7 @@ declare namespace CustomInterfaces {
         otherDetails: string;
         applicants: Array<UserInterface>;
     }
+    export interface GenericForm {
+        [key: string]: string;
+    }
 }
