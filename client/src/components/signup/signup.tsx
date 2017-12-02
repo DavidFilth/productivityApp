@@ -8,7 +8,7 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 
 export interface SignUpProps extends RouteComponentProps<{}> {
-    onUserSignUp(): void;
+    onUserSignUp(user: CustomInterfaces.UserInterface): void;
 }
 export interface SignUpState {
     form: {
@@ -102,7 +102,7 @@ class SignUp extends React.Component<SignUpProps, SignUpState> {
         `}).then((res: ApolloQueryResult<{
             addUser: CustomInterfaces.UserInterface;
         }>) => {
-            console.log('Added new user: ' + res.data.addUser);
+            this.props.onUserSignUp(res.data.addUser);
             this.props.history.push('/login');
         });
         return false;
