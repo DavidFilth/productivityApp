@@ -24,8 +24,13 @@ export default class Navbar extends React.Component<{}, NavBarState> {
     this.state = {
       user: null
     };
+    this.handleUserRegister = this.handleUserRegister.bind(this);
     this.handleUserLogout = this.handleUserLogout.bind(this);
     this.handleUserLogin = this.handleUserLogin.bind(this);
+  }
+  handleUserRegister(user: CustomInterfaces.UserInterface) {
+    console.log(user.profile.firstName + ' ' + user.profile.lastName);
+    console.log('Is now registered as a user');
   }
   handleUserLogin(user: CustomInterfaces.UserInterface) {
     this.setState({
@@ -128,47 +133,16 @@ export default class Navbar extends React.Component<{}, NavBarState> {
                 </li>
                 </OptionallyDisplayed>
               </ul>
-              <OptionallyDisplayed display={!this.state.user}>
-                <form>
-                  <div className="form-row">
-                    <div className="form-groupcol-md-5" >
-                      <label htmlFor="inputEmail1">
-                        Email
-                    </label>
-                      <input
-                        className="form-control form-control-sm"
-                        type="email"
-                        id="inputEmail1"
-                        placeholder="Email"
-                      />
-                    </div>
-                    <div className="form-groupcol-md-5" >
-                      <label htmlFor="inputPassword1">
-                        Password
-                    </label>
-                      <input
-                        className="form-control form-control-sm"
-                        type="password"
-                        id="inputPassword1"
-                        placeholder="1234"
-                      />
-                    </div>
-                    <div className="form-group col-md-2">
-                      <label>
-                        &nbsp; &nbsp;
-                    </label>
-                      <button className="btn btn-primary btn-sm" type="submit">
-                        Log in
-                    </button>
-                    </div>
-                  </div>
-                </form>
-              </OptionallyDisplayed>
             </div>
           </nav>
           <Switch>
             <Route exact={true} path="/" component={Home} />
-            <Route path="/register" component={Signup} />
+            <Route 
+              path="/register" 
+              render={(props) => {
+                return <Signup {...props} onUserSignUp={this.handleUserRegister}/>;
+              }}
+            />
             <Route 
               path="/network" 
               render={(props) => {
