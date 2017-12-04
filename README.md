@@ -1,9 +1,5 @@
-Express TypeScript Starter
+Productivity App
 =======================
-
-[![Dependency Status](https://david-dm.org/bowdenk7/express-typescript-starter.svg)](https://david-dm.org/bowdenk7/express-typescript-starter) [![Build Status](https://travis-ci.org/bowdenk7/express-typescript-starter.svg?branch=master)](https://travis-ci.org/bowdenk7/express-typescript-starter) 
-
-**Live Demo**: TODO
 
 # Pre-reqs
 - Install [Node.js](https://nodejs.org/en/)
@@ -19,45 +15,26 @@ Express TypeScript Starter
 # Getting started
 - Clone the repository
 ```
-git clone --depth=1 https://github.com/bowdenk7/express-typescript-starter.git <project_name>
+git clone --depth=1 https://github.com/DavidFilth/productivityApp.git <project_name>
 ```
-- Install dependencies
+- Install dependencies (server & client)
 ```
 cd <project_name>
 npm install
 ```
 - Start your mongoDB server (you'll probably want another command prompt)
 ```
-npm run start-client
+mongod
 ```
 - Start your Client server in port 3000
 ```
-mongod
+npm run start-client
 ```
 - Build and run the project
 ```
 npm start
 ```
 Navigate to `http://localhost:4000`
-
-# TypeScript + Node 
-The main purpose of this repository is to show a good end-to-end project setup and workflow for writing Node code in TypeScript.
-I will try to keep this as up-to-date as possible, but community contributions and recommendations for improvements are encourage and will be most welcome. 
-
-In the next few sections I will call out everything that changes when adding TypeScript to an Express project.
-Note that all of this has already been setup for this project, but feel free to use this as a reference for converting other Node.js project to TypeScript.
-
-> **Note on editors!** - TypeScript has great support in [every editor](http://www.typescriptlang.org/index.html#download-links), but this project has been pre-configured for use with [VS Code](https://code.visualstudio.com/). 
-Throughout the README I'll try to call out specific places where VS code really shines or where this project has been setup to take advantage of specific features.
-
-## Getting TypeScript
-TypeScript itself is simple to add to any project with `npm`.
-```
-npm install -D typescript
-```
-If you're using VS Code then you're good to go!
-VS Code will detect and use the TypeScript version you have installed in your `node_modules` folder. 
-For other editors, make sure you have the corresponding [TypeScript plugin](http://www.typescriptlang.org/index.html#download-links). 
 
 ## Project Structure
 The most obvious difference in a TypeScript + Node project is the folder structure.
@@ -435,16 +412,3 @@ To install or update these dependencies you can use either `npm` or `yarn`.
 
 # Other
 Here is a section of miscellaneous tips. 
-
-## Yarn vs NPM
-
-[Yarn](https://yarnpkg.com/en/) is a new JavaScript package manager that builds off of npm. 
-It is not a replacement for npm, however it does provide a few advantages over npm in some cases.
-
-Yarn is generally faster and has a few extra features like `yarn why <package>` which will tell you which package required a specific dependency.
-Yarn also doesn't clutter your command prompt when your npm scripts return with status 1.
-For these reasons I would personally recommend downloading and giving Yarn a shot.
-That said, everything in this template can be used with npm as well.
-
-# Hackathon Start Project
-A majority of this quick start's content was inspired or adapted from Sahat's excellent [Hackathon Starter project](https://github.com/sahat/hackathon-starter).

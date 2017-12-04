@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 class Profile extends React.Component<CustomInterfaces.UserInterface> {
-
     render() {
         return (
             <div>
@@ -21,7 +20,7 @@ class Profile extends React.Component<CustomInterfaces.UserInterface> {
                                 {this.props.profile.firstName + ' ' + this.props.profile.lastName}
                             </div>
                             <div className="ks-description">
-                                {this.props.company.name}
+                                {this.props.company ? this.props.company.name : 'No company'}
                             </div>
                         </div>
                     </div>

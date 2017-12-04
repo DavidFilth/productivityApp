@@ -13,7 +13,7 @@ class ArticleList extends React.Component<ArticleListProps> {
         return (
             <div>
                 <h4>Articles</h4>
-                {articles}
+                {articles.length !== 0 ? articles : 'No articles'}
             </div>
         );
     }

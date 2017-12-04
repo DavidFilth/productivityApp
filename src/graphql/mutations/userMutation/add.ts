@@ -12,6 +12,8 @@ export default {
         }
     },
     resolve(root: object, args: any) {
-        return new UserModel(args.data).save();
+        return new UserModel(args.data).save().catch(() => {
+            console.log('Invalid User');
+        });
     }
 };

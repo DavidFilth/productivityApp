@@ -19,7 +19,7 @@ class ActivityList extends React.Component<ActivityListProps> {
         return (
             <div>
                 <h4>Activities</h4>
-                {activities}
+                {activities.length > 0 ? activities : 'No activities'}
             </div>
         );
     }

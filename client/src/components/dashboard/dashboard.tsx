@@ -38,7 +38,13 @@ class Dassboard extends React.Component<
         }
     }
     componentDidMount() {
-        if (!this.props.User) {
+        if (!this.props.User) { return; }
+        if (!this.props.User.company) {
+            this.setState(update(this.state, {
+                activities: {$set: []},
+                articles: {$set: []},
+                vacancies: {$set: []}
+            }));
             return;
         }
         client.query({query: gql`

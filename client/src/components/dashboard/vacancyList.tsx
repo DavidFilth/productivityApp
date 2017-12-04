@@ -19,7 +19,7 @@ class VacancyList extends React.Component<VacancyListProps> {
                         <input className="form-control" type="text" placeholder="Search"/>
                     </div>
                     <div className="suggestions">
-                        {vacancies}
+                        {vacancies.length > 0 ? vacancies : 'No vacancies'}
                     </div>
                 </div>
             </div>
