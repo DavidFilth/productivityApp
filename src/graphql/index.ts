@@ -14,6 +14,6 @@ const schema = new GraphQLSchema({
         fields: mutations
     })
 });
-addMockFunctionsToSchema({schema, mocks});
+// addMockFunctionsToSchema({schema, mocks});
 
 export default schema;

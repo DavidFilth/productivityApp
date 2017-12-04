@@ -1,5 +1,6 @@
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { ruleRunnner, Rules, run  } from '../../util/validation';
+import OptionallyDisplayed from '../util/optionallyDisplayed';
 import { client } from '../../util/graphql/client';
 import { ApolloQueryResult } from 'apollo-client';
 import * as update from 'immutability-helper';
@@ -17,6 +18,7 @@ export interface LoginState {
     };
     isValid: boolean;
     validationErrors: CustomInterfaces.GenericForm | null;
+    falseCredentials: boolean;
 }
 
 const fieldValidation = [
@@ -33,7 +35,8 @@ class Login extends React.Component< LoginProps, LoginState> {
                 password: ''
             },
             isValid: true,
-            validationErrors: null
+            validationErrors: null,
+            falseCredentials: false
         };
         this.handleFieldChanged = this.handleFieldChanged.bind(this);
         this.handleSubmitClicked = this.handleSubmitClicked.bind(this);
@@ -101,9 +104,13 @@ class Login extends React.Component< LoginProps, LoginState> {
         }).then((res: ApolloQueryResult<{
             login: CustomInterfaces.UserInterface;
         }>) => {
-            if (res.data) {
+            if (res.data.login) {
                 this.props.onLogUserIn(res.data.login);
                 this.props.history.push('/network');
+            } else {
+                this.setState(update(this.state, {
+                    falseCredentials: {$set: true}
+                }));
             }
         });
         return false;
@@ -112,18 +119,26 @@ class Login extends React.Component< LoginProps, LoginState> {
         let { email, password } = this.state.form;
         return (
             <div className="container">
+                <div className="row">
+                    <div className="col-md-3"/>
+                    <div className="col-md-6">
+                        <h2>Please Login</h2>
+                        <hr/>
+                    </div>
+                </div>
+                <OptionallyDisplayed display={this.state.falseCredentials}>
+                    <div className="row">
+                        <div className="col-md-3" />
+                        <div className="col-md-6 alert alert-danger">
+                            Wrong email/password please try again...
+                        </div>
+                    </div>
+                </OptionallyDisplayed>
                 <form 
                     className="form-horizontal" 
                     onSubmit={this.handleSubmitClicked}
                     noValidate={true}
                 >
-                    <div className="row">
-                        <div className="col-md-3"/>
-                        <div className="col-md-6">
-                            <h2>Please Login</h2>
-                            <hr/>
-                        </div>
-                    </div>
                     <InputField 
                         name="email"
                         id="email"
