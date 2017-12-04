@@ -13,7 +13,7 @@ export default {
     },
     resolve(root: object, args: any) {
         return new UserModel(args.data).save().catch(() => {
-            console.log('Invalid User');
+            console.log("Invalid User");
         });
     }
 };
