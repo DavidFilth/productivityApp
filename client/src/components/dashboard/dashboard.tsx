@@ -11,7 +11,7 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import './style.css';
 
-export interface DashboardProps {
+export interface DashboardProps extends RouteComponentProps<{}> {
     User: CustomInterfaces.UserInterface;
 }
 
@@ -21,10 +21,8 @@ export interface DashboardState {
     vacancies: Array<CustomInterfaces.VacanyInterface>;
 }
 
-class Dassboard extends React.Component< 
-    DashboardProps & RouteComponentProps<{}>, 
-    DashboardState> {
-    constructor(props: DashboardProps & RouteComponentProps<{}>) {
+class Dassboard extends React.Component<DashboardProps, DashboardState> {
+    constructor(props: DashboardProps) {
         super(props);
         this.state = {
             activities: [],
